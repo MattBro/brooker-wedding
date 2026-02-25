@@ -1,36 +1,66 @@
 "use client";
 
+import { useState, useEffect } from "react";
+
+function useDarkMode() {
+  const [isDark, setIsDark] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-color-scheme: dark)");
+    setIsDark(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setIsDark(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
+  return isDark;
+}
+
 export default function FarmScene() {
+  const isDark = useDarkMode();
+
   return (
     <div
       className="pointer-events-none absolute inset-0 overflow-hidden"
       aria-hidden="true"
     >
-      {/* Dreamy gradient sky */}
+      {/* Dreamy gradient sky -- light: warm cream, dark: midnight forest */}
       <div
         className="absolute inset-0"
         style={{
-          background:
-            "linear-gradient(180deg, #E8E2D0 0%, #F0EADE 25%, #FDF8F0 50%, #E8EDDF 80%, #D5DFC8 100%)",
+          background: isDark
+            ? "linear-gradient(180deg, #050D06 0%, #091408 25%, #0D1F0F 50%, #0F2812 80%, #0A1A0C 100%)"
+            : "linear-gradient(180deg, #E8E2D0 0%, #F0EADE 25%, #FDF8F0 50%, #E8EDDF 80%, #D5DFC8 100%)",
         }}
       />
 
-      {/* Warm golden sun glow */}
+      {/* Light: warm golden sun glow / Dark: cool moon glow */}
       <div className="absolute top-6 right-[15%] sm:top-10">
         <div
           className="h-20 w-20 rounded-full opacity-75 sm:h-32 sm:w-32"
           style={{
-            background:
-              "radial-gradient(circle, rgba(196,154,60,0.55) 0%, rgba(196,154,60,0.18) 40%, transparent 70%)",
+            background: isDark
+              ? "radial-gradient(circle, rgba(200,210,220,0.45) 0%, rgba(180,200,220,0.15) 40%, transparent 70%)"
+              : "radial-gradient(circle, rgba(196,154,60,0.55) 0%, rgba(196,154,60,0.18) 40%, transparent 70%)",
           }}
         />
+        {isDark && (
+          <div
+            className="absolute top-2 left-2 h-16 w-16 rounded-full sm:top-3 sm:left-3 sm:h-24 sm:w-24"
+            style={{
+              background: "radial-gradient(circle, rgba(220,230,240,0.35) 0%, rgba(200,215,230,0.1) 50%, transparent 80%)",
+              boxShadow: "0 0 40px rgba(200,215,230,0.2)",
+            }}
+          />
+        )}
       </div>
 
-      {/* Floating fireflies */}
-      <Fireflies />
+      {/* Stars (dark mode only) */}
+      {isDark && <NightStars />}
+
+      {/* Floating fireflies -- brighter in dark mode */}
+      <Fireflies isDark={isDark} />
 
       {/* Fairy dust sparkle trail */}
-      <FairyDustTrail />
+      <FairyDustTrail isDark={isDark} />
 
       {/* === ALL LANDSCAPE IN ONE SVG === */}
       <svg
@@ -42,26 +72,26 @@ export default function FarmScene() {
         {/* Distant treeline - soft bumpy tops */}
         <path
           d="M0 300 Q60 240 120 270 Q160 210 200 260 Q240 190 280 240 Q320 210 360 265 Q400 230 440 250 Q480 185 520 235 Q560 210 600 260 Q640 200 680 245 Q720 220 760 268 Q800 238 840 252 Q880 192 920 228 Q960 210 1000 260 Q1040 228 1080 245 Q1120 200 1160 235 Q1200 218 1240 268 Q1280 238 1320 252 Q1360 210 1400 242 L1440 265 L1440 600 L0 600 Z"
-          fill="#1D4420"
-          opacity="0.15"
+          fill={isDark ? "#0A1A0C" : "#1D4420"}
+          opacity={isDark ? 0.6 : 0.15}
         />
 
         {/* Fairy string light wires */}
         <path
           d="M260 270 Q370 248 500 268"
           fill="none"
-          stroke="#1D4420"
-          strokeWidth="0.5"
-          opacity="0.1"
+          stroke={isDark ? "#C49A3C" : "#1D4420"}
+          strokeWidth={isDark ? "0.8" : "0.5"}
+          opacity={isDark ? 0.2 : 0.1}
         />
         <path
           d="M880 242 Q990 220 1120 244"
           fill="none"
-          stroke="#1D4420"
-          strokeWidth="0.5"
-          opacity="0.1"
+          stroke={isDark ? "#C49A3C" : "#1D4420"}
+          strokeWidth={isDark ? "0.8" : "0.5"}
+          opacity={isDark ? 0.2 : 0.1}
         />
-        {/* Fairy light bulbs */}
+        {/* Fairy light bulbs -- glow brighter in dark mode */}
         {[
           { cx: 300, cy: 262 },
           { cx: 340, cy: 256 },
@@ -74,60 +104,72 @@ export default function FarmScene() {
           { cx: 1040, cy: 231 },
           { cx: 1080, cy: 238 },
         ].map((l, i) => (
-          <circle
-            key={`fl-${i}`}
-            cx={l.cx}
-            cy={l.cy}
-            r="2.5"
-            fill="#C49A3C"
-            opacity="0.3"
-            className="animate-fairy-light-twinkle"
-            style={{ animationDelay: `${i * 0.25}s` }}
-          />
+          <g key={`fl-${i}`}>
+            {isDark && (
+              <circle
+                cx={l.cx}
+                cy={l.cy}
+                r="6"
+                fill="#C49A3C"
+                opacity="0.15"
+                className="animate-fairy-light-twinkle"
+                style={{ animationDelay: `${i * 0.25}s` }}
+              />
+            )}
+            <circle
+              cx={l.cx}
+              cy={l.cy}
+              r={isDark ? "3" : "2.5"}
+              fill="#C49A3C"
+              opacity={isDark ? 0.7 : 0.3}
+              className="animate-fairy-light-twinkle"
+              style={{ animationDelay: `${i * 0.25}s` }}
+            />
+          </g>
         ))}
 
         {/* Mid hills layer 1 - gentle rolling */}
         <path
           d="M0 600 L0 380 Q180 320 360 360 Q540 300 720 340 Q900 290 1080 335 Q1260 310 1440 365 L1440 600 Z"
-          fill="#5C7A4A"
-          opacity="0.2"
+          fill={isDark ? "#0B160D" : "#5C7A4A"}
+          opacity={isDark ? 0.7 : 0.2}
         />
 
         {/* Mid hills layer 2 - slightly closer */}
         <path
           d="M0 600 L0 400 Q240 350 480 385 Q720 330 960 370 Q1200 345 1440 395 L1440 600 Z"
-          fill="#5C7A4A"
-          opacity="0.3"
+          fill={isDark ? "#0D1A0F" : "#5C7A4A"}
+          opacity={isDark ? 0.8 : 0.3}
         />
 
         {/* Gnome silhouettes on the hills */}
-        <g transform="translate(320, 340)" opacity="0.2">
-          <polygon points="0,-14 5,0 -5,0" fill="#1D4420" />
-          <circle cx="0" cy="3" r="4" fill="#1D4420" />
-          <ellipse cx="0" cy="9" rx="5" ry="5.5" fill="#1D4420" />
-          <ellipse cx="0" cy="6" rx="3" ry="4" fill="#1D4420" opacity="0.7" />
+        <g transform="translate(320, 340)" opacity={isDark ? 0.35 : 0.2}>
+          <polygon points="0,-14 5,0 -5,0" fill={isDark ? "#040A05" : "#1D4420"} />
+          <circle cx="0" cy="3" r="4" fill={isDark ? "#040A05" : "#1D4420"} />
+          <ellipse cx="0" cy="9" rx="5" ry="5.5" fill={isDark ? "#040A05" : "#1D4420"} />
+          <ellipse cx="0" cy="6" rx="3" ry="4" fill={isDark ? "#040A05" : "#1D4420"} opacity="0.7" />
         </g>
-        <g transform="translate(1060, 310)" opacity="0.15">
-          <polygon points="0,-12 4,0 -4,0" fill="#1D4420" />
-          <circle cx="0" cy="2.5" r="3.5" fill="#1D4420" />
-          <ellipse cx="0" cy="8" rx="4.5" ry="5" fill="#1D4420" />
+        <g transform="translate(1060, 310)" opacity={isDark ? 0.3 : 0.15}>
+          <polygon points="0,-12 4,0 -4,0" fill={isDark ? "#040A05" : "#1D4420"} />
+          <circle cx="0" cy="2.5" r="3.5" fill={isDark ? "#040A05" : "#1D4420"} />
+          <ellipse cx="0" cy="8" rx="4.5" ry="5" fill={isDark ? "#040A05" : "#1D4420"} />
         </g>
-        <g transform="translate(700, 325)" opacity="0.12">
-          <polygon points="0,-10 3.5,0 -3.5,0" fill="#1D4420" />
-          <circle cx="0" cy="2" r="3" fill="#1D4420" />
-          <ellipse cx="0" cy="7" rx="3.5" ry="4" fill="#1D4420" />
+        <g transform="translate(700, 325)" opacity={isDark ? 0.25 : 0.12}>
+          <polygon points="0,-10 3.5,0 -3.5,0" fill={isDark ? "#040A05" : "#1D4420"} />
+          <circle cx="0" cy="2" r="3" fill={isDark ? "#040A05" : "#1D4420"} />
+          <ellipse cx="0" cy="7" rx="3.5" ry="4" fill={isDark ? "#040A05" : "#1D4420"} />
         </g>
 
         {/* Foreground hills - richest green, closest */}
         <path
           d="M0 600 L0 460 Q200 410 400 445 Q600 395 800 435 Q1000 405 1200 450 Q1350 425 1440 455 L1440 600 Z"
-          fill="#7A9966"
-          opacity="0.4"
+          fill={isDark ? "#0F200F" : "#7A9966"}
+          opacity={isDark ? 0.85 : 0.4}
         />
         <path
           d="M0 600 L0 500 Q180 460 400 485 Q650 450 900 480 Q1100 455 1300 482 Q1400 470 1440 490 L1440 600 Z"
-          fill="#8FAA78"
-          opacity="0.3"
+          fill={isDark ? "#112411" : "#8FAA78"}
+          opacity={isDark ? 0.9 : 0.3}
         />
 
         {/* Toadstool mushrooms in the foreground */}
@@ -139,20 +181,21 @@ export default function FarmScene() {
           { x: 680, y: 475, s: 0.65 },
         ].map((m, i) => (
           <g key={`ts-${i}`} transform={`translate(${m.x}, ${m.y}) scale(${m.s})`}>
-            <rect x="-3" y="0" width="6" height="10" rx="2" fill="#F0EADE" opacity="0.5" />
-            <ellipse cx="0" cy="-2" rx="10" ry="8" fill="#9B4040" opacity="0.35" />
-            <circle cx="-4" cy="-5" r="1.5" fill="#FDF8F0" opacity="0.4" />
-            <circle cx="3" cy="-6" r="1.2" fill="#FDF8F0" opacity="0.4" />
-            <circle cx="5" cy="-2" r="1" fill="#FDF8F0" opacity="0.3" />
+            <rect x="-3" y="0" width="6" height="10" rx="2" fill={isDark ? "#2A2018" : "#F0EADE"} opacity={isDark ? 0.6 : 0.5} />
+            <ellipse cx="0" cy="-2" rx="10" ry="8" fill={isDark ? "#5A2020" : "#9B4040"} opacity={isDark ? 0.5 : 0.35} />
+            <circle cx="-4" cy="-5" r="1.5" fill={isDark ? "#C8C0B0" : "#FDF8F0"} opacity={isDark ? 0.3 : 0.4} />
+            <circle cx="3" cy="-6" r="1.2" fill={isDark ? "#C8C0B0" : "#FDF8F0"} opacity={isDark ? 0.3 : 0.4} />
+            <circle cx="5" cy="-2" r="1" fill={isDark ? "#C8C0B0" : "#FDF8F0"} opacity={isDark ? 0.2 : 0.3} />
           </g>
         ))}
 
-        {/* Fairy door */}
-        <g transform="translate(310, 470)" opacity="0.25" className="hidden sm:block">
+        {/* Fairy door -- glows subtly in dark mode */}
+        <g transform="translate(310, 470)" opacity={isDark ? 0.4 : 0.25} className="hidden sm:block">
           <path d="M-7 12 L-7 -3 Q-7 -12 0 -12 Q7 -12 7 -3 L7 12 Z" fill="#5C3A1A" />
           <path d="M-5 12 L-5 -2 Q-5 -10 0 -10 Q5 -10 5 -2 L5 12 Z" fill="#8B6914" opacity="0.6" />
-          <circle cx="3.5" cy="5" r="1" fill="#C49A3C" opacity="0.7" />
-          <circle cx="0" cy="-4" r="1.8" fill="#C49A3C" opacity="0.25" />
+          <circle cx="3.5" cy="5" r="1" fill="#C49A3C" opacity={isDark ? 0.9 : 0.7} />
+          {isDark && <circle cx="3.5" cy="5" r="3" fill="#C49A3C" opacity="0.15" />}
+          <circle cx="0" cy="-4" r="1.8" fill="#C49A3C" opacity={isDark ? 0.4 : 0.25} />
         </g>
       </svg>
 
@@ -165,7 +208,7 @@ export default function FarmScene() {
   );
 }
 
-function Fireflies() {
+function Fireflies({ isDark }: { isDark: boolean }) {
   const fireflies = [
     { left: "15%", top: "25%", delay: "0s", duration: "4s" },
     { left: "35%", top: "35%", delay: "1.5s", duration: "5s" },
@@ -179,20 +222,38 @@ function Fireflies() {
     { left: "90%", top: "42%", delay: "0.6s", duration: "3.6s" },
   ];
 
+  const extraFireflies = isDark
+    ? [
+        { left: "5%", top: "18%", delay: "0.4s", duration: "4.6s" },
+        { left: "48%", top: "15%", delay: "1.2s", duration: "3.9s" },
+        { left: "72%", top: "48%", delay: "2.8s", duration: "5.1s" },
+        { left: "38%", top: "55%", delay: "0.9s", duration: "4.3s" },
+        { left: "82%", top: "35%", delay: "1.6s", duration: "3.7s" },
+        { left: "20%", top: "52%", delay: "3.2s", duration: "4.1s" },
+      ]
+    : [];
+
+  const allFireflies = [...fireflies, ...extraFireflies];
+
   return (
     <>
-      {fireflies.map((f, i) => (
+      {allFireflies.map((f, i) => (
         <div
           key={i}
-          className="animate-firefly absolute h-1.5 w-1.5 rounded-full sm:h-2 sm:w-2"
+          className="animate-firefly absolute rounded-full"
           style={{
             left: f.left,
             top: f.top,
+            width: isDark ? "10px" : "6px",
+            height: isDark ? "10px" : "6px",
             animationDelay: f.delay,
             animationDuration: f.duration,
-            background:
-              "radial-gradient(circle, rgba(196,154,60,0.9) 0%, rgba(196,154,60,0.35) 60%, transparent 100%)",
-            boxShadow: "0 0 8px rgba(196,154,60,0.6)",
+            background: isDark
+              ? "radial-gradient(circle, rgba(212,174,86,1) 0%, rgba(196,154,60,0.6) 40%, transparent 100%)"
+              : "radial-gradient(circle, rgba(196,154,60,0.9) 0%, rgba(196,154,60,0.35) 60%, transparent 100%)",
+            boxShadow: isDark
+              ? "0 0 14px rgba(196,154,60,0.8), 0 0 28px rgba(196,154,60,0.3)"
+              : "0 0 8px rgba(196,154,60,0.6)",
           }}
         />
       ))}
@@ -267,7 +328,51 @@ function FloatingPetals() {
   );
 }
 
-function FairyDustTrail() {
+function NightStars() {
+  const stars = [
+    { left: "5%", top: "5%", size: 1.5, delay: "0s" },
+    { left: "12%", top: "8%", size: 1, delay: "0.8s" },
+    { left: "22%", top: "3%", size: 2, delay: "1.5s" },
+    { left: "30%", top: "10%", size: 1, delay: "0.3s" },
+    { left: "38%", top: "4%", size: 1.5, delay: "2s" },
+    { left: "48%", top: "7%", size: 1, delay: "1.2s" },
+    { left: "55%", top: "2%", size: 2, delay: "0.6s" },
+    { left: "62%", top: "9%", size: 1, delay: "1.8s" },
+    { left: "70%", top: "5%", size: 1.5, delay: "0.4s" },
+    { left: "78%", top: "11%", size: 1, delay: "2.2s" },
+    { left: "88%", top: "4%", size: 1.5, delay: "1s" },
+    { left: "95%", top: "8%", size: 1, delay: "1.6s" },
+    { left: "8%", top: "14%", size: 1, delay: "2.5s" },
+    { left: "42%", top: "12%", size: 1, delay: "0.9s" },
+    { left: "75%", top: "15%", size: 1.5, delay: "1.4s" },
+    { left: "18%", top: "16%", size: 1, delay: "2.1s" },
+    { left: "52%", top: "13%", size: 1, delay: "0.7s" },
+    { left: "85%", top: "14%", size: 1, delay: "1.9s" },
+  ];
+
+  return (
+    <>
+      {stars.map((s, i) => (
+        <div
+          key={i}
+          className="animate-star-twinkle absolute rounded-full"
+          style={{
+            left: s.left,
+            top: s.top,
+            width: `${s.size}px`,
+            height: `${s.size}px`,
+            background: "rgba(220, 230, 240, 0.8)",
+            boxShadow: "0 0 3px rgba(220, 230, 240, 0.4)",
+            animationDelay: s.delay,
+            animationDuration: `${2 + (i % 3)}s`,
+          }}
+        />
+      ))}
+    </>
+  );
+}
+
+function FairyDustTrail({ isDark }: { isDark: boolean }) {
   const sparkles = [
     { left: "20%", top: "30%", delay: "0s", duration: "3s", size: 3 },
     { left: "30%", top: "25%", delay: "0.5s", duration: "2.5s", size: 2 },
@@ -308,7 +413,7 @@ function FairyDustTrail() {
             <path
               d="M6 0 L7 4.5 L12 6 L7 7.5 L6 12 L5 7.5 L0 6 L5 4.5 Z"
               fill="#C49A3C"
-              opacity="0.5"
+              opacity={isDark ? "0.8" : "0.5"}
             />
           </svg>
         </div>

@@ -42,87 +42,89 @@ export default function Navigation() {
   }, [isOpen]);
 
   return (
-    <nav
-      className={`fixed top-0 right-0 left-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? "bg-cream/85 shadow-[0_1px_20px_rgba(29,68,32,0.06)] backdrop-blur-xl"
-          : "bg-cream/40 backdrop-blur-sm"
-      }`}
-    >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between sm:h-18">
-          {/* Logo */}
-          <Link href="/" className="group flex items-center gap-2">
-            <span className="font-[family-name:var(--font-cormorant-garant)] text-2xl font-bold tracking-wide text-forest transition-colors group-hover:text-soft-gold sm:text-3xl">
-              M & B
-            </span>
-          </Link>
+    <>
+      <nav
+        className={`fixed top-0 right-0 left-0 z-50 transition-all duration-500 ${
+          scrolled
+            ? "bg-cream/85 shadow-[0_1px_20px_rgba(29,68,32,0.06)] backdrop-blur-xl dark:bg-[#0D1F0F]/90 dark:shadow-[0_1px_20px_rgba(0,0,0,0.3)]"
+            : "bg-cream/40 backdrop-blur-sm dark:bg-[#0D1F0F]/40"
+        }`}
+      >
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex h-16 items-center justify-between sm:h-18">
+            {/* Logo */}
+            <Link href="/" className="group flex items-center gap-2">
+              <span className="font-[family-name:var(--font-cormorant-garant)] text-2xl font-bold tracking-wide text-forest transition-colors group-hover:text-soft-gold dark:text-cream sm:text-3xl">
+                M & B
+              </span>
+            </Link>
 
-          {/* Desktop Nav */}
-          <div className="hidden items-center gap-1 md:flex">
-            {navLinks.map((link) => {
-              const isActive = pathname === link.href;
+            {/* Desktop Nav */}
+            <div className="hidden items-center gap-1 md:flex">
+              {navLinks.map((link) => {
+                const isActive = pathname === link.href;
 
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`relative px-4 py-2 text-sm font-medium transition-all duration-300 ${
-                    link.sparkle
-                      ? "rounded-full bg-soft-gold/10 text-soft-gold-dark hover:bg-soft-gold/20"
-                      : isActive
-                        ? "text-forest"
-                        : "text-forest/60 hover:text-forest"
-                  }`}
-                >
-                  {link.sparkle && (
-                    <span className="mr-1 text-xs">&#10024;</span>
-                  )}
-                  {link.label}
-                  {isActive && !link.sparkle && (
-                    <motion.span
-                      layoutId="nav-underline"
-                      className="absolute bottom-0 left-2 right-2 h-[2px] rounded-full bg-soft-gold"
-                      transition={{
-                        type: "spring",
-                        stiffness: 350,
-                        damping: 30,
-                      }}
-                    />
-                  )}
-                </Link>
-              );
-            })}
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={`relative px-4 py-2 text-sm font-medium transition-all duration-300 ${
+                      link.sparkle
+                        ? "rounded-full bg-soft-gold/10 text-soft-gold-dark hover:bg-soft-gold/20 dark:bg-soft-gold/15 dark:text-soft-gold-light"
+                        : isActive
+                          ? "text-forest dark:text-cream"
+                          : "text-forest/60 hover:text-forest dark:text-cream/60 dark:hover:text-cream"
+                    }`}
+                  >
+                    {link.sparkle && (
+                      <span className="mr-1 text-xs">&#10024;</span>
+                    )}
+                    {link.label}
+                    {isActive && !link.sparkle && (
+                      <motion.span
+                        layoutId="nav-underline"
+                        className="absolute bottom-0 left-2 right-2 h-[2px] rounded-full bg-soft-gold"
+                        transition={{
+                          type: "spring",
+                          stiffness: 350,
+                          damping: 30,
+                        }}
+                      />
+                    )}
+                  </Link>
+                );
+              })}
+            </div>
+
+            {/* Mobile Hamburger */}
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="relative z-[70] flex h-11 w-11 flex-col items-center justify-center gap-1.5 rounded-lg bg-forest/10 dark:bg-cream/10 md:hidden"
+              aria-label={isOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isOpen}
+            >
+              <motion.span
+                animate={
+                  isOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }
+                }
+                className="block h-[2.5px] w-6 rounded-full bg-forest dark:bg-cream"
+              />
+              <motion.span
+                animate={isOpen ? { opacity: 0, x: -10 } : { opacity: 1, x: 0 }}
+                className="block h-[2.5px] w-6 rounded-full bg-forest dark:bg-cream"
+              />
+              <motion.span
+                animate={
+                  isOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }
+                }
+                className="block h-[2.5px] w-6 rounded-full bg-forest dark:bg-cream"
+              />
+            </button>
           </div>
-
-          {/* Mobile Hamburger */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="relative z-50 flex h-11 w-11 flex-col items-center justify-center gap-1.5 rounded-lg bg-forest/10 md:hidden"
-            aria-label={isOpen ? "Close menu" : "Open menu"}
-            aria-expanded={isOpen}
-          >
-            <motion.span
-              animate={
-                isOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }
-              }
-              className="block h-[2.5px] w-6 rounded-full bg-forest"
-            />
-            <motion.span
-              animate={isOpen ? { opacity: 0, x: -10 } : { opacity: 1, x: 0 }}
-              className="block h-[2.5px] w-6 rounded-full bg-forest"
-            />
-            <motion.span
-              animate={
-                isOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }
-              }
-              className="block h-[2.5px] w-6 rounded-full bg-forest"
-            />
-          </button>
         </div>
-      </div>
+      </nav>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu - rendered outside nav to avoid backdrop-filter stacking context */}
       <AnimatePresence>
         {isOpen && (
           <>
@@ -131,7 +133,7 @@ export default function Navigation() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-40 bg-forest/15 backdrop-blur-sm md:hidden"
+              className="fixed inset-0 z-[60] bg-forest/15 backdrop-blur-sm dark:bg-black/40 md:hidden"
               onClick={() => setIsOpen(false)}
             />
 
@@ -141,7 +143,7 @@ export default function Navigation() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="fixed top-0 right-0 z-40 h-full w-72 bg-cream/97 shadow-[-8px_0_30px_rgba(29,68,32,0.08)] backdrop-blur-xl md:hidden"
+              className="fixed top-0 right-0 z-[60] h-full w-72 bg-cream shadow-[-8px_0_30px_rgba(29,68,32,0.08)] dark:bg-[#0D1F0F] dark:shadow-[-8px_0_30px_rgba(0,0,0,0.3)] md:hidden"
             >
               <div className="flex h-full flex-col px-6 pt-24 pb-8">
                 <div className="flex flex-col gap-2">
@@ -159,10 +161,10 @@ export default function Navigation() {
                           href={link.href}
                           className={`block rounded-xl px-4 py-3.5 text-lg font-medium transition-all ${
                             link.sparkle
-                              ? "bg-soft-gold/10 text-soft-gold-dark"
+                              ? "bg-soft-gold/10 text-soft-gold-dark dark:bg-soft-gold/15 dark:text-soft-gold-light"
                               : isActive
-                                ? "bg-sage/15 text-forest"
-                                : "text-forest/80 hover:bg-sage/10 hover:text-forest"
+                                ? "bg-sage/15 text-forest dark:bg-sage/20 dark:text-cream"
+                                : "text-forest/80 hover:bg-sage/10 hover:text-forest dark:text-cream/80 dark:hover:bg-sage/15 dark:hover:text-cream"
                           }`}
                         >
                           {link.sparkle && (
@@ -190,6 +192,6 @@ export default function Navigation() {
           </>
         )}
       </AnimatePresence>
-    </nav>
+    </>
   );
 }

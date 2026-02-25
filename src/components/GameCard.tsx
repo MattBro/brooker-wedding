@@ -42,7 +42,7 @@ export default function GameCard({
       viewport={{ once: true, margin: "-50px" }}
     >
       <Link href={href} className="group block">
-        <div className="game-card-hover overflow-hidden rounded-2xl border border-sage/15 bg-warm-white/80 backdrop-blur-sm">
+        <div className="game-card-hover overflow-hidden rounded-2xl border border-sage/15 bg-warm-white/80 backdrop-blur-sm dark:border-soft-gold/10 dark:bg-[#162618]/80">
           {/* Emoji display area */}
           <div
             className="relative flex h-24 items-center justify-center overflow-hidden sm:h-28"

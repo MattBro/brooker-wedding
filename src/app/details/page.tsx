@@ -61,17 +61,17 @@ function SectionCard({
   accent?: "sage" | "lavender" | "blush" | "gold";
 }) {
   const accentColors = {
-    sage: "border-[#9CAF88]/20 bg-[#9CAF88]/5",
-    lavender: "border-[#B8A9C9]/20 bg-[#B8A9C9]/5",
-    blush: "border-[#F2D7D5]/40 bg-[#F2D7D5]/10",
-    gold: "border-[#D4A574]/20 bg-[#D4A574]/5",
+    sage: "border-[#9CAF88]/20 bg-[#9CAF88]/5 dark:border-[#9CAF88]/15 dark:bg-[#9CAF88]/8",
+    lavender: "border-[#B8A9C9]/20 bg-[#B8A9C9]/5 dark:border-[#B8A9C9]/15 dark:bg-[#B8A9C9]/8",
+    blush: "border-[#F2D7D5]/40 bg-[#F2D7D5]/10 dark:border-[#D4A894]/20 dark:bg-[#D4A894]/8",
+    gold: "border-[#D4A574]/20 bg-[#D4A574]/5 dark:border-[#D4A574]/15 dark:bg-[#D4A574]/8",
   };
 
   const iconBg = {
-    sage: "bg-[#9CAF88]/15 text-[#2D5016]",
-    lavender: "bg-[#B8A9C9]/15 text-[#4A2040]",
-    blush: "bg-[#F2D7D5]/30 text-[#4A2040]",
-    gold: "bg-[#D4A574]/15 text-[#6B4226]",
+    sage: "bg-[#9CAF88]/15 text-[#2D5016] dark:bg-[#9CAF88]/20 dark:text-[#C8D8B8]",
+    lavender: "bg-[#B8A9C9]/15 text-[#4A2040] dark:bg-[#B8A9C9]/20 dark:text-[#D4C8E0]",
+    blush: "bg-[#F2D7D5]/30 text-[#4A2040] dark:bg-[#D4A894]/20 dark:text-[#F0DDD2]",
+    gold: "bg-[#D4A574]/15 text-[#6B4226] dark:bg-[#D4A574]/20 dark:text-[#E8C8A0]",
   };
 
   return (
@@ -85,10 +85,10 @@ function SectionCard({
           {icon}
         </div>
         <div className="flex-1">
-          <h2 className="font-[family-name:var(--font-display)] text-2xl font-semibold text-[#2D5016]">
+          <h2 className="font-[family-name:var(--font-display)] text-2xl font-semibold text-[#2D5016] dark:text-[#FDF8F0]">
             {title}
           </h2>
-          <div className="mt-3 space-y-2 font-[family-name:var(--font-body)] text-[#2D5016]/70">
+          <div className="mt-3 space-y-2 font-[family-name:var(--font-body)] text-[#2D5016]/70 dark:text-[#FDF8F0]/70">
             {children}
           </div>
         </div>
@@ -100,12 +100,12 @@ function SectionCard({
 function BotanicalDivider() {
   return (
     <div className="flex items-center justify-center py-2">
-      <div className="h-px w-8 bg-[#9CAF88]/20" />
-      <svg width="16" height="16" viewBox="0 0 16 16" className="mx-2 text-[#9CAF88]/30">
+      <div className="h-px w-8 bg-[#9CAF88]/20 dark:bg-[#9CAF88]/15" />
+      <svg width="16" height="16" viewBox="0 0 16 16" className="mx-2 text-[#9CAF88]/30 dark:text-[#9CAF88]/25">
         <path d="M8 2 C8 2, 3 6, 8 10 C13 6, 8 2, 8 2Z" fill="currentColor" />
         <line x1="8" y1="10" x2="8" y2="14" stroke="currentColor" strokeWidth="0.8" />
       </svg>
-      <div className="h-px w-8 bg-[#9CAF88]/20" />
+      <div className="h-px w-8 bg-[#9CAF88]/20 dark:bg-[#9CAF88]/15" />
     </div>
   );
 }
@@ -115,7 +115,7 @@ export default function DetailsPage() {
   const countdown = useCountdown(weddingMs);
 
   return (
-    <div className="min-h-screen bg-[#FDF8F0]">
+    <div className="min-h-screen bg-[#FDF8F0] dark:bg-[#0D1F0F]">
       <div className="mx-auto max-w-3xl px-4 pt-24 pb-16 sm:pt-28 sm:pb-20">
         {/* Header */}
         <motion.div
@@ -123,21 +123,21 @@ export default function DetailsPage() {
           animate={{ opacity: 1, y: 0 }}
           className="mb-12 text-center"
         >
-          <div className="mb-3 font-[family-name:var(--font-body)] text-sm font-medium tracking-widest text-[#9CAF88] uppercase">
+          <div className="mb-3 font-[family-name:var(--font-body)] text-sm font-medium tracking-widest text-[#9CAF88] uppercase dark:text-[#A8C090]">
             Everything You Need to Know
           </div>
-          <h1 className="font-[family-name:var(--font-display)] text-4xl font-semibold text-[#2D5016] sm:text-5xl md:text-6xl">
+          <h1 className="font-[family-name:var(--font-display)] text-4xl font-semibold text-[#2D5016] dark:text-[#FDF8F0] sm:text-5xl md:text-6xl">
             Celebration Details
           </h1>
 
           {/* Botanical divider */}
           <div className="mx-auto mt-6 flex items-center justify-center gap-3">
-            <div className="h-px w-16 bg-[#9CAF88]/40" />
-            <svg width="20" height="20" viewBox="0 0 20 20" className="text-[#9CAF88]/60">
+            <div className="h-px w-16 bg-[#9CAF88]/40 dark:bg-[#9CAF88]/25" />
+            <svg width="20" height="20" viewBox="0 0 20 20" className="text-[#9CAF88]/60 dark:text-[#9CAF88]/40">
               <path d="M10 2 C10 2, 4 8, 10 14 C16 8, 10 2, 10 2Z" fill="currentColor" />
               <line x1="10" y1="14" x2="10" y2="18" stroke="currentColor" strokeWidth="1" />
             </svg>
-            <div className="h-px w-16 bg-[#9CAF88]/40" />
+            <div className="h-px w-16 bg-[#9CAF88]/40 dark:bg-[#9CAF88]/25" />
           </div>
         </motion.div>
 
@@ -146,7 +146,7 @@ export default function DetailsPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="mb-12 rounded-2xl border border-[#D4A574]/20 bg-[#D4A574]/5 p-6 text-center sm:p-8"
+          className="mb-12 rounded-2xl border border-[#D4A574]/20 bg-[#D4A574]/5 p-6 text-center dark:border-[#D4A574]/15 dark:bg-[#D4A574]/8 sm:p-8"
         >
           <p className="mb-4 font-[family-name:var(--font-body)] text-sm font-medium tracking-wider text-[#D4A574] uppercase">
             Counting Down the Days
@@ -159,7 +159,7 @@ export default function DetailsPage() {
               { value: countdown.seconds, label: "Seconds" },
             ].map((item) => (
               <div key={item.label} className="text-center">
-                <div className="mb-1 rounded-xl border border-[#D4A574]/20 bg-white/80 px-3 py-2 font-[family-name:var(--font-display)] text-2xl font-semibold text-[#2D5016] sm:px-5 sm:text-3xl">
+                <div className="mb-1 rounded-xl border border-[#D4A574]/20 bg-white/80 px-3 py-2 font-[family-name:var(--font-display)] text-2xl font-semibold text-[#2D5016] dark:border-[#D4A574]/15 dark:bg-[#162618]/80 dark:text-[#FDF8F0] sm:px-5 sm:text-3xl">
                   {String(item.value).padStart(2, "0")}
                 </div>
                 <div className="font-[family-name:var(--font-body)] text-xs text-[#D4A574]/70">
@@ -185,7 +185,7 @@ export default function DetailsPage() {
             delay={0.1}
             accent="sage"
           >
-            <p className="font-[family-name:var(--font-display)] text-xl font-semibold text-[#2D5016]">
+            <p className="font-[family-name:var(--font-display)] text-xl font-semibold text-[#2D5016] dark:text-[#FDF8F0]">
               Saturday, June 27, 2026
             </p>
             <p>
@@ -206,7 +206,7 @@ export default function DetailsPage() {
             delay={0.15}
             accent="lavender"
           >
-            <p className="font-[family-name:var(--font-display)] text-xl font-semibold text-[#2D5016]">
+            <p className="font-[family-name:var(--font-display)] text-xl font-semibold text-[#2D5016] dark:text-[#FDF8F0]">
               49 Clarks Mill Rd, Greenwich, NY 12834
             </p>
             <p>
@@ -236,11 +236,11 @@ export default function DetailsPage() {
                 There will also be plenty of catered food, so absolutely no pressure.
                 It&apos;s a farm party, and sharing a meal together is part of the magic.
               </p>
-              <div className="rounded-xl border border-[#D4A574]/20 bg-[#D4A574]/5 p-4">
+              <div className="rounded-xl border border-[#D4A574]/20 bg-[#D4A574]/5 p-4 dark:border-[#D4A574]/15 dark:bg-[#D4A574]/8">
                 <p className="font-[family-name:var(--font-body)] text-sm font-medium text-[#D4A574]">
                   Thinking of bringing something?
                 </p>
-                <p className="mt-1 text-sm text-[#2D5016]/60">
+                <p className="mt-1 text-sm text-[#2D5016]/60 dark:text-[#FDF8F0]/60">
                   Salads, sides, desserts, and anything made with love are all welcome.
                   You can let us know what you&apos;re bringing in your RSVP!
                 </p>
@@ -275,8 +275,8 @@ export default function DetailsPage() {
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
                     <div>
-                      <span className="font-medium text-[#2D5016]">{entry.item}</span>
-                      <span className="ml-2 text-sm text-[#2D5016]/55">
+                      <span className="font-medium text-[#2D5016] dark:text-[#FDF8F0]">{entry.item}</span>
+                      <span className="ml-2 text-sm text-[#2D5016]/55 dark:text-[#FDF8F0]/55">
                         {entry.note}
                       </span>
                     </div>
@@ -292,13 +292,13 @@ export default function DetailsPage() {
           <motion.div
             {...fadeUp}
             transition={{ ...fadeUp.transition, delay: 0.3 }}
-            className="rounded-2xl border border-[#D4A574]/20 bg-[#D4A574]/5 p-6 sm:p-8"
+            className="rounded-2xl border border-[#D4A574]/20 bg-[#D4A574]/5 p-6 dark:border-[#D4A574]/15 dark:bg-[#D4A574]/8 sm:p-8"
           >
             <div className="mb-6 text-center">
-              <h2 className="font-[family-name:var(--font-display)] text-3xl font-semibold text-[#2D5016]">
+              <h2 className="font-[family-name:var(--font-display)] text-3xl font-semibold text-[#2D5016] dark:text-[#FDF8F0]">
                 Meet Our Farm Family
               </h2>
-              <p className="mt-2 font-[family-name:var(--font-body)] text-sm text-[#2D5016]/60">
+              <p className="mt-2 font-[family-name:var(--font-body)] text-sm text-[#2D5016]/60 dark:text-[#FDF8F0]/60">
                 You may spot some friendly faces during your visit
               </p>
             </div>
@@ -317,19 +317,19 @@ export default function DetailsPage() {
                   key={animal.name}
                   whileHover={{ y: -4 }}
                   transition={{ duration: 0.2 }}
-                  className="rounded-xl border border-[#D4A574]/15 bg-white/60 p-3 text-center transition-shadow hover:shadow-sm"
+                  className="rounded-xl border border-[#D4A574]/15 bg-white/60 p-3 text-center transition-shadow hover:shadow-sm dark:border-[#D4A574]/10 dark:bg-[#162618]/60"
                 >
                   <div className="mb-1 text-2xl">{animal.emoji}</div>
-                  <div className="font-[family-name:var(--font-body)] text-xs font-semibold text-[#2D5016]">
+                  <div className="font-[family-name:var(--font-body)] text-xs font-semibold text-[#2D5016] dark:text-[#FDF8F0]">
                     {animal.name}
                   </div>
-                  <div className="font-[family-name:var(--font-body)] text-[11px] text-[#2D5016]/60">
+                  <div className="font-[family-name:var(--font-body)] text-[11px] text-[#2D5016]/60 dark:text-[#FDF8F0]/60">
                     {animal.desc}
                   </div>
                 </motion.div>
               ))}
             </div>
-            <p className="mt-4 text-center font-[family-name:var(--font-body)] text-xs text-[#2D5016]/55">
+            <p className="mt-4 text-center font-[family-name:var(--font-body)] text-xs text-[#2D5016]/55 dark:text-[#FDF8F0]/55">
               Please be gentle with all our farm friends -- they live here full time!
             </p>
           </motion.div>
@@ -352,11 +352,11 @@ export default function DetailsPage() {
             </p>
             <a
               href="mailto:brookerhousehold@gmail.com"
-              className="mt-2 inline-block rounded-lg bg-[#B8A9C9]/15 px-4 py-2 font-[family-name:var(--font-body)] text-sm font-medium text-[#4A2040] transition-colors hover:bg-[#B8A9C9]/25"
+              className="mt-2 inline-block rounded-lg bg-[#B8A9C9]/15 px-4 py-2 font-[family-name:var(--font-body)] text-sm font-medium text-[#4A2040] transition-colors hover:bg-[#B8A9C9]/25 dark:bg-[#B8A9C9]/20 dark:text-[#D4C8E0] dark:hover:bg-[#B8A9C9]/30"
             >
               brookerhousehold@gmail.com
             </a>
-            <p className="mt-2 text-sm text-[#2D5016]/55">
+            <p className="mt-2 text-sm text-[#2D5016]/55 dark:text-[#FDF8F0]/55">
               We usually respond within a day (farm chores permitting!)
             </p>
           </SectionCard>

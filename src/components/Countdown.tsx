@@ -42,13 +42,13 @@ function CountdownCard({ value, label }: TimeUnit) {
   return (
     <div className="flex flex-col items-center gap-2">
       <motion.div
-        className="flex items-center justify-center rounded-2xl border border-sage/20 bg-warm-white/80 px-3 py-3 shadow-[0_2px_12px_rgba(29,68,32,0.08)] backdrop-blur-sm sm:px-5 sm:py-4"
+        className="flex items-center justify-center rounded-2xl border border-sage/20 bg-warm-white/80 px-3 py-3 shadow-[0_2px_12px_rgba(29,68,32,0.08)] backdrop-blur-sm dark:border-soft-gold/20 dark:bg-[#162618]/80 dark:shadow-[0_2px_12px_rgba(0,0,0,0.2)] sm:px-5 sm:py-4"
         key={value}
         initial={{ opacity: 0.8 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.3 }}
       >
-        <span className="font-[family-name:var(--font-cormorant-garant)] text-2xl font-bold tracking-wide text-forest sm:text-4xl md:text-5xl">
+        <span className="font-[family-name:var(--font-cormorant-garant)] text-2xl font-bold tracking-wide text-forest dark:text-cream sm:text-4xl md:text-5xl">
           {display}
         </span>
       </motion.div>

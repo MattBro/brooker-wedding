@@ -89,7 +89,7 @@ export default function RSVPPage() {
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 }}
-                  className="mb-3 text-sm font-medium tracking-widest text-sage uppercase"
+                  className="mb-3 text-sm font-medium tracking-widest text-sage uppercase dark:text-sage-light"
                 >
                   You&apos;re Invited
                 </motion.div>
@@ -97,7 +97,7 @@ export default function RSVPPage() {
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2 }}
-                  className="font-[family-name:var(--font-cormorant-garant)] text-4xl font-semibold text-forest sm:text-5xl"
+                  className="font-[family-name:var(--font-cormorant-garant)] text-4xl font-semibold text-forest dark:text-cream sm:text-5xl"
                 >
                   Join Our Celebration
                 </motion.h1>
@@ -105,7 +105,7 @@ export default function RSVPPage() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.4 }}
-                  className="mt-4 text-base text-deep-plum/60"
+                  className="mt-4 text-base text-deep-plum/60 dark:text-cream/60"
                 >
                   We would be so happy to have you there. Please let us know if you can make it!
                 </motion.p>
@@ -117,12 +117,12 @@ export default function RSVPPage() {
                   transition={{ delay: 0.5, duration: 0.8 }}
                   className="mx-auto mt-6 flex items-center justify-center gap-3"
                 >
-                  <div className="h-px w-16 bg-sage/40" />
+                  <div className="h-px w-16 bg-sage/40 dark:bg-sage/30" />
                   <svg width="20" height="20" viewBox="0 0 20 20" className="text-sage/60">
                     <path d="M10 2 C10 2, 4 8, 10 14 C16 8, 10 2, 10 2Z" fill="currentColor" />
                     <line x1="10" y1="14" x2="10" y2="18" stroke="currentColor" strokeWidth="1" />
                   </svg>
-                  <div className="h-px w-16 bg-sage/40" />
+                  <div className="h-px w-16 bg-sage/40 dark:bg-sage/30" />
                 </motion.div>
               </div>
 
@@ -136,7 +136,7 @@ export default function RSVPPage() {
               >
                 {/* Name */}
                 <div>
-                  <label className="mb-2 block text-sm font-medium text-deep-plum">
+                  <label className="mb-2 block text-sm font-medium text-deep-plum dark:text-cream">
                     Your Name <span className="text-soft-gold">*</span>
                   </label>
                   <input
@@ -151,7 +151,7 @@ export default function RSVPPage() {
 
                 {/* Email */}
                 <div>
-                  <label className="mb-2 block text-sm font-medium text-deep-plum">
+                  <label className="mb-2 block text-sm font-medium text-deep-plum dark:text-cream">
                     Email Address <span className="text-soft-gold">*</span>
                   </label>
                   <input
@@ -166,7 +166,7 @@ export default function RSVPPage() {
 
                 {/* Attending Toggle */}
                 <div>
-                  <label className="mb-3 block text-sm font-medium text-deep-plum">
+                  <label className="mb-3 block text-sm font-medium text-deep-plum dark:text-cream">
                     Will you be joining us?
                   </label>
                   <div className="flex gap-3">
@@ -176,7 +176,7 @@ export default function RSVPPage() {
                       className={`flex-1 rounded-xl border-2 px-4 py-3 text-sm font-medium transition-all duration-300 ${
                         attending
                           ? "border-soft-gold bg-soft-gold text-white shadow-md"
-                          : "border-lavender/30 bg-warm-white text-deep-plum/65 hover:border-lavender/50"
+                          : "border-lavender/30 bg-warm-white text-deep-plum/65 hover:border-lavender/50 dark:border-sage/30 dark:bg-[#162618] dark:text-cream/65 dark:hover:border-sage/50"
                       }`}
                     >
                       Joyfully Accept
@@ -187,7 +187,7 @@ export default function RSVPPage() {
                       className={`flex-1 rounded-xl border-2 px-4 py-3 text-sm font-medium transition-all duration-300 ${
                         !attending
                           ? "border-lavender bg-lavender text-white shadow-md"
-                          : "border-lavender/30 bg-warm-white text-deep-plum/65 hover:border-lavender/50"
+                          : "border-lavender/30 bg-warm-white text-deep-plum/65 hover:border-lavender/50 dark:border-sage/30 dark:bg-[#162618] dark:text-cream/65 dark:hover:border-sage/50"
                       }`}
                     >
                       Regretfully Decline
@@ -207,7 +207,7 @@ export default function RSVPPage() {
                     >
                       {/* Guest Count */}
                       <div>
-                        <label className="mb-2 block text-sm font-medium text-deep-plum">
+                        <label className="mb-2 block text-sm font-medium text-deep-plum dark:text-cream">
                           Number of Guests
                         </label>
                         <div className="flex items-center gap-4">
@@ -216,11 +216,11 @@ export default function RSVPPage() {
                             onClick={() =>
                               setGuestCount(Math.max(1, guestCount - 1))
                             }
-                            className="flex h-11 w-11 items-center justify-center rounded-full border border-sage/30 bg-warm-white text-lg text-deep-plum transition-all hover:border-sage hover:bg-sage/10"
+                            className="flex h-11 w-11 items-center justify-center rounded-full border border-sage/30 bg-warm-white text-lg text-deep-plum transition-all hover:border-sage hover:bg-sage/10 dark:border-sage/40 dark:bg-[#162618] dark:text-cream dark:hover:bg-sage/20"
                           >
                             -
                           </button>
-                          <span className="min-w-[2rem] text-center font-[family-name:var(--font-cormorant-garant)] text-3xl font-semibold text-deep-plum">
+                          <span className="min-w-[2rem] text-center font-[family-name:var(--font-cormorant-garant)] text-3xl font-semibold text-deep-plum dark:text-cream">
                             {guestCount}
                           </span>
                           <button
@@ -228,11 +228,11 @@ export default function RSVPPage() {
                             onClick={() =>
                               setGuestCount(Math.min(10, guestCount + 1))
                             }
-                            className="flex h-11 w-11 items-center justify-center rounded-full border border-sage/30 bg-warm-white text-lg text-deep-plum transition-all hover:border-sage hover:bg-sage/10"
+                            className="flex h-11 w-11 items-center justify-center rounded-full border border-sage/30 bg-warm-white text-lg text-deep-plum transition-all hover:border-sage hover:bg-sage/10 dark:border-sage/40 dark:bg-[#162618] dark:text-cream dark:hover:bg-sage/20"
                           >
                             +
                           </button>
-                          <span className="text-sm text-deep-plum/60">
+                          <span className="text-sm text-deep-plum/60 dark:text-cream/60">
                             {guestCount === 1 ? "guest" : "guests"}
                           </span>
                         </div>
@@ -240,7 +240,7 @@ export default function RSVPPage() {
 
                       {/* Dietary Restrictions */}
                       <div>
-                        <label className="mb-2 block text-sm font-medium text-deep-plum">
+                        <label className="mb-2 block text-sm font-medium text-deep-plum dark:text-cream">
                           Dietary Needs
                         </label>
                         <input
@@ -252,14 +252,14 @@ export default function RSVPPage() {
                           placeholder="Allergies, vegan, gluten-free..."
                           className="enchanted-input"
                         />
-                        <p className="mt-1.5 text-xs text-deep-plum/55">
+                        <p className="mt-1.5 text-xs text-deep-plum/55 dark:text-cream/55">
                           Optional -- let us know about any food needs
                         </p>
                       </div>
 
                       {/* Potluck */}
                       <div>
-                        <label className="mb-2 block text-sm font-medium text-deep-plum">
+                        <label className="mb-2 block text-sm font-medium text-deep-plum dark:text-cream">
                           Bringing a Dish to Share?
                         </label>
                         <input
@@ -269,7 +269,7 @@ export default function RSVPPage() {
                           placeholder="Grandma's famous pie, garden salad..."
                           className="enchanted-input"
                         />
-                        <p className="mt-1.5 text-xs text-deep-plum/55">
+                        <p className="mt-1.5 text-xs text-deep-plum/55 dark:text-cream/55">
                           Totally optional -- there will also be catered food, so no pressure at all!
                         </p>
                       </div>
@@ -279,7 +279,7 @@ export default function RSVPPage() {
 
                 {/* Message */}
                 <div>
-                  <label className="mb-2 block text-sm font-medium text-deep-plum">
+                  <label className="mb-2 block text-sm font-medium text-deep-plum dark:text-cream">
                     Leave Us a Note
                   </label>
                   <textarea
@@ -298,12 +298,12 @@ export default function RSVPPage() {
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0 }}
-                      className="rounded-xl border border-blush-dark/30 bg-blush/40 p-4"
+                      className="rounded-xl border border-blush-dark/30 bg-blush/40 p-4 dark:border-blush-dark/40 dark:bg-blush-dark/20"
                     >
-                      <p className="text-sm font-medium text-deep-plum">
+                      <p className="text-sm font-medium text-deep-plum dark:text-blush-light">
                         Oops!
                       </p>
-                      <p className="mt-1 text-sm text-deep-plum/80">
+                      <p className="mt-1 text-sm text-deep-plum/80 dark:text-cream/80">
                         {errorMessage}
                       </p>
                     </motion.div>
@@ -338,7 +338,7 @@ export default function RSVPPage() {
 
               {/* Footer */}
               <div className="mt-8 text-center">
-                <p className="text-sm text-sage/70">
+                <p className="text-sm text-sage/70 dark:text-sage-light/70">
                   June 27, 2026
                 </p>
               </div>
@@ -379,13 +379,13 @@ function SuccessScreen({
                 <path d="M8 12l3 3 5-5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </motion.div>
-            <h2 className="font-[family-name:var(--font-cormorant-garant)] text-3xl font-semibold text-forest">
+            <h2 className="font-[family-name:var(--font-cormorant-garant)] text-3xl font-semibold text-forest dark:text-cream">
               We Can&apos;t Wait to Celebrate With You!
             </h2>
-            <p className="mt-4 text-base text-deep-plum/70">
+            <p className="mt-4 text-base text-deep-plum/70 dark:text-cream/70">
               {name}, your RSVP has been received.
             </p>
-            <p className="mt-2 text-sm text-deep-plum/60">
+            <p className="mt-2 text-sm text-deep-plum/60 dark:text-cream/60">
               See you at our farm on June 27, 2026.
             </p>
             <div className="mx-auto mt-6 flex items-center justify-center gap-3">
@@ -407,13 +407,13 @@ function SuccessScreen({
                 <path d="M12 8v4M12 16h.01" strokeLinecap="round" />
               </svg>
             </motion.div>
-            <h2 className="font-[family-name:var(--font-cormorant-garant)] text-3xl font-semibold text-forest">
+            <h2 className="font-[family-name:var(--font-cormorant-garant)] text-3xl font-semibold text-forest dark:text-cream">
               We&apos;ll Miss You!
             </h2>
-            <p className="mt-4 text-base text-deep-plum/70">
+            <p className="mt-4 text-base text-deep-plum/70 dark:text-cream/70">
               {name}, we&apos;re sorry you can&apos;t make it.
             </p>
-            <p className="mt-2 text-sm text-deep-plum/60">
+            <p className="mt-2 text-sm text-deep-plum/60 dark:text-cream/60">
               We&apos;ll be thinking of you and wishing you were there to celebrate with us.
             </p>
           </>
@@ -422,7 +422,7 @@ function SuccessScreen({
         <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
           <Link
             href="/"
-            className="flex min-h-[44px] items-center justify-center rounded-xl border border-sage/30 px-6 py-3 text-center text-sm font-medium text-deep-plum transition-all hover:bg-sage/10"
+            className="flex min-h-[44px] items-center justify-center rounded-xl border border-sage/30 px-6 py-3 text-center text-sm font-medium text-deep-plum transition-all hover:bg-sage/10 dark:border-sage/40 dark:text-cream dark:hover:bg-sage/20"
           >
             Back Home
           </Link>
