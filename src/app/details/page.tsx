@@ -213,7 +213,7 @@ export default function DetailsPage() {
               Address details coming soon -- check back or reach out to us!
             </p>
             <div className="mt-3 rounded-xl border border-[#B8A9C9]/20 bg-[#B8A9C9]/5 p-3">
-              <p className="text-sm text-[#2D5016]/50">
+              <p className="text-sm text-[#2D5016]/60">
                 Parking is available on the property. Follow the signs from the main road.
               </p>
             </div>
@@ -281,7 +281,7 @@ export default function DetailsPage() {
                     </svg>
                     <div>
                       <span className="font-medium text-[#2D5016]">{entry.item}</span>
-                      <span className="ml-2 text-sm text-[#2D5016]/40">
+                      <span className="ml-2 text-sm text-[#2D5016]/55">
                         {entry.note}
                       </span>
                     </div>
@@ -328,13 +328,13 @@ export default function DetailsPage() {
                   <div className="font-[family-name:var(--font-body)] text-xs font-semibold text-[#2D5016]">
                     {animal.name}
                   </div>
-                  <div className="font-[family-name:var(--font-body)] text-[11px] text-[#2D5016]/50">
+                  <div className="font-[family-name:var(--font-body)] text-[11px] text-[#2D5016]/60">
                     {animal.desc}
                   </div>
                 </motion.div>
               ))}
             </div>
-            <p className="mt-4 text-center font-[family-name:var(--font-body)] text-xs text-[#2D5016]/40">
+            <p className="mt-4 text-center font-[family-name:var(--font-body)] text-xs text-[#2D5016]/55">
               Please be gentle with all our farm friends -- they live here full time!
             </p>
           </motion.div>
@@ -361,7 +361,7 @@ export default function DetailsPage() {
             >
               brookerhousehold@gmail.com
             </a>
-            <p className="mt-2 text-sm text-[#2D5016]/40">
+            <p className="mt-2 text-sm text-[#2D5016]/55">
               We usually respond within a day (farm chores permitting!)
             </p>
           </SectionCard>
@@ -379,7 +379,7 @@ export default function DetailsPage() {
           >
             RSVP Now
           </Link>
-          <p className="mt-4 font-[family-name:var(--font-body)] text-sm text-[#9CAF88]/50">
+          <p className="mt-4 font-[family-name:var(--font-body)] text-sm text-[#9CAF88]/65">
             June 27, 2026
           </p>
         </motion.div>

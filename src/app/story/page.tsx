@@ -200,7 +200,7 @@ export default function StoryPage() {
                             <circle cx="8.5" cy="8.5" r="1.5" />
                             <path d="M21 15l-5-5L5 21" />
                           </svg>
-                          <p className="mt-2 text-xs text-sage/40">
+                          <p className="mt-2 text-xs text-sage/55">
                             Photo coming soon
                           </p>
                         </div>
@@ -303,19 +303,19 @@ export default function StoryPage() {
             <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center">
               <Link
                 href="/rsvp"
-                className="rounded-xl bg-soft-gold px-6 py-2.5 text-center text-sm font-semibold text-white shadow-md transition-all hover:bg-soft-gold-dark hover:shadow-lg"
+                className="flex min-h-[44px] items-center justify-center rounded-xl bg-soft-gold px-6 py-3 text-center text-sm font-semibold text-white shadow-md transition-all hover:bg-soft-gold-dark hover:shadow-lg"
               >
                 RSVP Now
               </Link>
               <Link
                 href="/details"
-                className="rounded-xl border border-sage/30 px-6 py-2.5 text-center text-sm font-medium text-deep-plum transition-all hover:bg-sage/10"
+                className="flex min-h-[44px] items-center justify-center rounded-xl border border-sage/30 px-6 py-3 text-center text-sm font-medium text-deep-plum transition-all hover:bg-sage/10"
               >
                 View Details
               </Link>
             </div>
           </div>
-          <p className="mt-6 text-sm text-sage/40">
+          <p className="mt-6 text-sm text-sage/55">
             June 27, 2026
           </p>
         </motion.div>

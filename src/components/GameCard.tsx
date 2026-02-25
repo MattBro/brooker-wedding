@@ -67,10 +67,11 @@ export default function GameCard({
             </h3>
 
             <div
-              className="flex items-center justify-center rounded-xl py-2 font-medium text-warm-white transition-all duration-300 group-hover:shadow-md"
+              className="flex items-center justify-center rounded-xl py-2.5 font-medium text-warm-white transition-all duration-300 group-hover:shadow-md"
               style={{
                 backgroundColor: colors.accent,
                 boxShadow: `0 2px 10px ${colors.accent}22`,
+                minHeight: 44,
               }}
             >
               <span className="text-xs tracking-wide sm:text-sm">Play</span>

@@ -61,10 +61,10 @@ export default function GameWrapper({ title, backHref, storageKey, children }: G
       }}
     >
       {/* Header */}
-      <div className="w-full max-w-lg px-4 pt-3 pb-2 flex items-center justify-between">
+      <div className="w-full max-w-lg px-4 pt-3 pb-2 flex items-center justify-between shrink-0" style={{ minHeight: 44 }}>
         <Link
           href={backHref}
-          className="text-amber-400 font-mono text-sm hover:text-amber-300 transition-colors flex items-center gap-1"
+          className="text-amber-400 font-mono text-sm hover:text-amber-300 transition-colors flex items-center gap-1 min-h-[44px] min-w-[44px]"
         >
           <svg
             width="16"
@@ -84,7 +84,7 @@ export default function GameWrapper({ title, backHref, storageKey, children }: G
           BACK
         </Link>
         <h1
-          className="font-mono text-lg font-bold tracking-wider"
+          className="font-mono text-base sm:text-lg font-bold tracking-wider"
           style={{ color: "#DAA520" }}
         >
           {title}
@@ -125,20 +125,22 @@ export default function GameWrapper({ title, backHref, storageKey, children }: G
                   }}
                   placeholder="Your name"
                   maxLength={20}
-                  className="flex-1 px-3 py-2 rounded font-mono text-sm outline-none"
+                  className="flex-1 px-3 py-3 rounded font-mono text-base outline-none"
                   style={{
                     background: "#0a0500",
                     border: "1px solid #DAA52044",
                     color: "#FFF8DC",
+                    minHeight: 44,
                   }}
                 />
                 <button
                   onClick={handleSubmitScore}
                   disabled={!playerName.trim()}
-                  className="px-4 py-2 rounded font-mono text-sm font-bold transition-colors disabled:opacity-40"
+                  className="px-5 py-3 rounded font-mono text-sm font-bold transition-colors disabled:opacity-40"
                   style={{
                     background: "#228B22",
                     color: "#FFF",
+                    minHeight: 44,
                   }}
                 >
                   SAVE

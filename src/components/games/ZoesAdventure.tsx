@@ -176,7 +176,9 @@ export default function ZoesAdventure({ onGameOver }: ZoesAdventureProps) {
     if (!canvas || !container) return;
     const dpr = window.devicePixelRatio || 1;
     const w = Math.min(container.getBoundingClientRect().width, 500);
-    const h = 600;
+    const maxH = window.innerHeight - container.getBoundingClientRect().top;
+    const h = Math.min(Math.max(maxH, 400), 600);
+    canvas.style.height = `${h}px`;
     canvas.width = w * dpr;
     canvas.height = h * dpr;
     const ctx = canvas.getContext('2d');
@@ -2048,6 +2050,7 @@ export default function ZoesAdventure({ onGameOver }: ZoesAdventureProps) {
           display: 'block',
           width: '100%',
           height: 600,
+          maxHeight: 'calc(100dvh - 60px)',
           borderRadius: 8,
           cursor: phase === 'playing' ? 'pointer' : 'default',
         }}

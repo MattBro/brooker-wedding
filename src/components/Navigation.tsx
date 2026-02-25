@@ -98,7 +98,7 @@ export default function Navigation() {
           {/* Mobile Hamburger */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="relative z-50 flex h-10 w-10 flex-col items-center justify-center gap-1.5 md:hidden"
+            className="relative z-50 flex h-11 w-11 flex-col items-center justify-center gap-1.5 rounded-lg bg-forest/10 md:hidden"
             aria-label={isOpen ? "Close menu" : "Open menu"}
             aria-expanded={isOpen}
           >
@@ -157,12 +157,12 @@ export default function Navigation() {
                       >
                         <Link
                           href={link.href}
-                          className={`block rounded-xl px-4 py-3 text-lg font-medium transition-all ${
+                          className={`block rounded-xl px-4 py-3.5 text-lg font-medium transition-all ${
                             link.sparkle
                               ? "bg-soft-gold/10 text-soft-gold-dark"
                               : isActive
                                 ? "bg-sage/15 text-forest"
-                                : "text-forest/70 hover:bg-sage/10 hover:text-forest"
+                                : "text-forest/80 hover:bg-sage/10 hover:text-forest"
                           }`}
                         >
                           {link.sparkle && (
@@ -180,7 +180,7 @@ export default function Navigation() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.4 }}
-                    className="font-[family-name:var(--font-cormorant-garant)] text-lg text-soft-gold/60"
+                    className="font-[family-name:var(--font-cormorant-garant)] text-lg text-soft-gold/70"
                   >
                     June 27, 2026
                   </motion.p>

@@ -411,13 +411,14 @@ function getButtonZones(canvasW: number, canvasH: number, playerSpec: CakeSpec):
   decoButtons: ButtonZone[];
   serveButton: ButtonZone;
 } {
-  const buttonH = 38;
-  const gap = 6;
+  const isCompact = canvasH < 560;
+  const buttonH = isCompact ? 34 : 38;
+  const gap = isCompact ? 4 : 6;
+  const sectionGap = isCompact ? 12 : 20;
   const margin = 12;
   const usableW = canvasW - margin * 2;
 
-  // Layers section - y position
-  const sectionStartY = canvasH * 0.48;
+  const sectionStartY = canvasH * (isCompact ? 0.42 : 0.48);
   const layerBtnW = (usableW - gap * 3) / 4;
   const layerButtons: ButtonZone[] = [];
   for (let i = 1; i <= 4; i++) {
@@ -434,8 +435,7 @@ function getButtonZones(canvasW: number, canvasH: number, playerSpec: CakeSpec):
     });
   }
 
-  // Frosting section
-  const frostingY = sectionStartY + buttonH + gap + 20;
+  const frostingY = sectionStartY + buttonH + gap + sectionGap;
   const frostBtnW = (usableW - gap * (FROSTING_COLORS.length - 1)) / FROSTING_COLORS.length;
   const frostingButtons: ButtonZone[] = [];
   for (let i = 0; i < FROSTING_COLORS.length; i++) {
@@ -452,8 +452,7 @@ function getButtonZones(canvasW: number, canvasH: number, playerSpec: CakeSpec):
     });
   }
 
-  // Decorations section
-  const decoY = frostingY + buttonH + gap + 20;
+  const decoY = frostingY + buttonH + gap + sectionGap;
   const decoBtnW = (usableW - gap * (DECO_OPTIONS.length - 1)) / DECO_OPTIONS.length;
   const decoButtons: ButtonZone[] = [];
   for (let i = 0; i < DECO_OPTIONS.length; i++) {
@@ -472,12 +471,11 @@ function getButtonZones(canvasW: number, canvasH: number, playerSpec: CakeSpec):
     });
   }
 
-  // Serve button
-  const serveY = decoY + buttonH + gap + 16;
+  const serveY = decoY + buttonH + gap + (isCompact ? 10 : 16);
   const serveBtnW = usableW * 0.6;
   const serveButton: ButtonZone = {
     x: canvasW / 2 - serveBtnW / 2,
-    y: serveY,
+    y: Math.min(serveY, canvasH - 52),
     w: serveBtnW,
     h: 44,
     label: 'SERVE!',
@@ -526,14 +524,18 @@ export default function CakeCreator({ onGameOver }: CakeCreatorProps) {
     const container = containerRef.current;
     if (!canvas || !container) return;
     const rect = container.getBoundingClientRect();
+    const w = rect.width;
+    const maxH = window.innerHeight - container.getBoundingClientRect().top;
+    const h = Math.min(Math.max(maxH, 480), 650);
+    canvas.style.height = `${h}px`;
     const dpr = window.devicePixelRatio || 1;
-    canvas.width = rect.width * dpr;
-    canvas.height = rect.height * dpr;
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
     const ctx = canvas.getContext('2d');
     if (ctx) ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     if (gameRef.current) {
-      gameRef.current.canvasW = rect.width;
-      gameRef.current.canvasH = rect.height;
+      gameRef.current.canvasW = w;
+      gameRef.current.canvasH = h;
     }
   }, []);
 
@@ -541,6 +543,9 @@ export default function CakeCreator({ onGameOver }: CakeCreatorProps) {
     const container = containerRef.current;
     if (!container) return;
     const rect = container.getBoundingClientRect();
+    const w = rect.width;
+    const maxH = window.innerHeight - container.getBoundingClientRect().top;
+    const h = Math.min(Math.max(maxH, 480), 650);
     const firstOrder = generateOrder(1);
     const maxTime = STARTING_TIME;
 
@@ -554,8 +559,8 @@ export default function CakeCreator({ onGameOver }: CakeCreatorProps) {
       particles: [],
       floatingTexts: [],
       frame: 0,
-      canvasW: rect.width,
-      canvasH: rect.height,
+      canvasW: w,
+      canvasH: h,
       lastTime: performance.now(),
       roundScore: null,
       resultTimer: 0,
@@ -1023,9 +1028,10 @@ export default function CakeCreator({ onGameOver }: CakeCreatorProps) {
       ctx.fillText(`Score: ${g.score}`, w - 12, 92);
       ctx.textAlign = 'left';
 
-      // Player's cake preview
-      const cakePreviewY = h * 0.38;
-      drawCake(ctx, w / 2, cakePreviewY, g.playerSpec, 0.9, g.frame);
+      const isCompact = h < 560;
+      const cakePreviewY = isCompact ? h * 0.32 : h * 0.38;
+      const cakeScale = isCompact ? 0.7 : 0.9;
+      drawCake(ctx, w / 2, cakePreviewY, g.playerSpec, cakeScale, g.frame);
 
       // Buttons
       drawButtons(ctx, w, h, g.playerSpec);
@@ -1255,6 +1261,7 @@ export default function CakeCreator({ onGameOver }: CakeCreatorProps) {
           display: 'block',
           width: '100%',
           height: 650,
+          maxHeight: 'calc(100dvh - 60px)',
           borderRadius: 8,
           cursor: 'pointer',
         }}

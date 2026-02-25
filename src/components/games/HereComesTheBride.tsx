@@ -1584,7 +1584,8 @@ export default function HereComesTheBride({ onGameOver }: HereComesTheBrideProps
       ref={containerRef}
       style={{
         width: '100%',
-        height: '100vh',
+        height: 'calc(100dvh - 44px)',
+        maxHeight: 'calc(100dvh - 44px)',
         background: '#FFDAB9',
         position: 'relative',
         overflow: 'hidden',

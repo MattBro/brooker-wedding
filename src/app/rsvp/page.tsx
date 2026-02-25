@@ -176,7 +176,7 @@ export default function RSVPPage() {
                       className={`flex-1 rounded-xl border-2 px-4 py-3 text-sm font-medium transition-all duration-300 ${
                         attending
                           ? "border-soft-gold bg-soft-gold text-white shadow-md"
-                          : "border-lavender/30 bg-warm-white text-deep-plum/50 hover:border-lavender/50"
+                          : "border-lavender/30 bg-warm-white text-deep-plum/65 hover:border-lavender/50"
                       }`}
                     >
                       Joyfully Accept
@@ -187,7 +187,7 @@ export default function RSVPPage() {
                       className={`flex-1 rounded-xl border-2 px-4 py-3 text-sm font-medium transition-all duration-300 ${
                         !attending
                           ? "border-lavender bg-lavender text-white shadow-md"
-                          : "border-lavender/30 bg-warm-white text-deep-plum/50 hover:border-lavender/50"
+                          : "border-lavender/30 bg-warm-white text-deep-plum/65 hover:border-lavender/50"
                       }`}
                     >
                       Regretfully Decline
@@ -216,7 +216,7 @@ export default function RSVPPage() {
                             onClick={() =>
                               setGuestCount(Math.max(1, guestCount - 1))
                             }
-                            className="flex h-10 w-10 items-center justify-center rounded-full border border-sage/30 bg-warm-white text-lg text-deep-plum transition-all hover:border-sage hover:bg-sage/10"
+                            className="flex h-11 w-11 items-center justify-center rounded-full border border-sage/30 bg-warm-white text-lg text-deep-plum transition-all hover:border-sage hover:bg-sage/10"
                           >
                             -
                           </button>
@@ -228,11 +228,11 @@ export default function RSVPPage() {
                             onClick={() =>
                               setGuestCount(Math.min(10, guestCount + 1))
                             }
-                            className="flex h-10 w-10 items-center justify-center rounded-full border border-sage/30 bg-warm-white text-lg text-deep-plum transition-all hover:border-sage hover:bg-sage/10"
+                            className="flex h-11 w-11 items-center justify-center rounded-full border border-sage/30 bg-warm-white text-lg text-deep-plum transition-all hover:border-sage hover:bg-sage/10"
                           >
                             +
                           </button>
-                          <span className="text-sm text-deep-plum/50">
+                          <span className="text-sm text-deep-plum/60">
                             {guestCount === 1 ? "guest" : "guests"}
                           </span>
                         </div>
@@ -252,7 +252,7 @@ export default function RSVPPage() {
                           placeholder="Allergies, vegan, gluten-free..."
                           className="enchanted-input"
                         />
-                        <p className="mt-1.5 text-xs text-deep-plum/40">
+                        <p className="mt-1.5 text-xs text-deep-plum/55">
                           Optional -- let us know about any food needs
                         </p>
                       </div>
@@ -269,7 +269,7 @@ export default function RSVPPage() {
                           placeholder="Grandma's famous pie, garden salad..."
                           className="enchanted-input"
                         />
-                        <p className="mt-1.5 text-xs text-deep-plum/40">
+                        <p className="mt-1.5 text-xs text-deep-plum/55">
                           Totally optional -- there will also be catered food, so no pressure at all!
                         </p>
                       </div>
@@ -338,7 +338,7 @@ export default function RSVPPage() {
 
               {/* Footer */}
               <div className="mt-8 text-center">
-                <p className="text-sm text-sage/60">
+                <p className="text-sm text-sage/70">
                   June 27, 2026
                 </p>
               </div>
@@ -385,7 +385,7 @@ function SuccessScreen({
             <p className="mt-4 text-base text-deep-plum/70">
               {name}, your RSVP has been received.
             </p>
-            <p className="mt-2 text-sm text-deep-plum/50">
+            <p className="mt-2 text-sm text-deep-plum/60">
               See you at the farm on June 27, 2026.
             </p>
             <div className="mx-auto mt-6 flex items-center justify-center gap-3">
@@ -413,7 +413,7 @@ function SuccessScreen({
             <p className="mt-4 text-base text-deep-plum/70">
               {name}, we&apos;re sorry you can&apos;t make it.
             </p>
-            <p className="mt-2 text-sm text-deep-plum/50">
+            <p className="mt-2 text-sm text-deep-plum/60">
               We&apos;ll be thinking of you and wishing you were there to celebrate with us.
             </p>
           </>
@@ -422,13 +422,13 @@ function SuccessScreen({
         <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
           <Link
             href="/"
-            className="rounded-xl border border-sage/30 px-6 py-2.5 text-center text-sm font-medium text-deep-plum transition-all hover:bg-sage/10"
+            className="flex min-h-[44px] items-center justify-center rounded-xl border border-sage/30 px-6 py-3 text-center text-sm font-medium text-deep-plum transition-all hover:bg-sage/10"
           >
             Back Home
           </Link>
           <Link
             href="/details"
-            className="rounded-xl bg-sage px-6 py-2.5 text-center text-sm font-medium text-white transition-all hover:bg-sage-dark"
+            className="flex min-h-[44px] items-center justify-center rounded-xl bg-sage px-6 py-3 text-center text-sm font-medium text-white transition-all hover:bg-sage-dark"
           >
             View Details
           </Link>

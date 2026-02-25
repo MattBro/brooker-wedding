@@ -26,9 +26,9 @@ const variantStyles: Record<ButtonVariant, string> = {
 };
 
 const sizeStyles = {
-  sm: "px-4 py-2 text-xs",
-  md: "px-6 py-3 text-sm",
-  lg: "px-10 py-4 text-base",
+  sm: "px-4 py-2.5 text-xs min-h-[44px]",
+  md: "px-6 py-3 text-sm min-h-[44px]",
+  lg: "px-10 py-4 text-base min-h-[44px]",
 };
 
 export default function PixelButton({

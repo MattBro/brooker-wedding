@@ -25,6 +25,7 @@ interface Defender {
   animTimer: number;
   target: Enemy | null;
   kills: number;
+  level: number;
 }
 
 interface Enemy {
@@ -203,33 +204,33 @@ const ENEMY_STATS: Record<
   }
 > = {
   red: {
-    hp: 60,
-    speed: 2.2,
-    reward: 5,
+    hp: 40,
+    speed: 1.6,
+    reward: 8,
     color: "#CC4400",
     name: "Red Fox",
     size: 0.6,
   },
   arctic: {
-    hp: 40,
-    speed: 3.5,
-    reward: 7,
+    hp: 25,
+    speed: 2.5,
+    reward: 10,
     color: "#E8E8F0",
     name: "Arctic Fox",
     size: 0.55,
   },
   gray: {
-    hp: 150,
-    speed: 1.2,
-    reward: 12,
+    hp: 100,
+    speed: 0.9,
+    reward: 18,
     color: "#666677",
     name: "Gray Fox",
     size: 0.7,
   },
   chief: {
-    hp: 500,
-    speed: 0.9,
-    reward: 50,
+    hp: 350,
+    speed: 0.7,
+    reward: 75,
     color: "#880000",
     name: "Fox Chief",
     size: 0.9,
@@ -245,44 +246,78 @@ function generateWaves(): WaveConfig[] {
 
     if (isBoss) {
       enemies.push({ type: "chief", count: 1, delay: 0 });
-      enemies.push({
-        type: "red",
-        count: Math.floor(w / 2),
-        delay: 1500,
-      });
+      if (w >= 5) {
+        enemies.push({
+          type: "red",
+          count: Math.max(1, Math.floor(w / 3)),
+          delay: 1800,
+        });
+      }
       if (w >= 10) {
         enemies.push({
           type: "gray",
-          count: Math.floor(w / 5),
-          delay: 2000,
+          count: 1,
+          delay: 2200,
+        });
+      }
+    } else if (w <= 3) {
+      enemies.push({
+        type: "red",
+        count: 2 + w,
+        delay: 1200,
+      });
+    } else if (w <= 5) {
+      enemies.push({
+        type: "red",
+        count: 3 + w,
+        delay: 1000,
+      });
+      if (w >= 4) {
+        enemies.push({
+          type: "arctic",
+          count: 1,
+          delay: 900,
+        });
+      }
+    } else if (w <= 10) {
+      enemies.push({
+        type: "red",
+        count: 3 + Math.floor(w * 0.8),
+        delay: 900,
+      });
+      enemies.push({
+        type: "arctic",
+        count: Math.floor(w / 3),
+        delay: 800,
+      });
+      if (w >= 8) {
+        enemies.push({
+          type: "gray",
+          count: Math.max(1, Math.floor((w - 6) / 2)),
+          delay: 1400,
         });
       }
     } else {
       enemies.push({
         type: "red",
-        count: 3 + w,
-        delay: 800 - Math.min(w * 30, 400),
+        count: 4 + Math.floor(w * 0.7),
+        delay: 800,
       });
-
-      if (w >= 3) {
-        enemies.push({
-          type: "arctic",
-          count: Math.floor(w / 2),
-          delay: 600,
-        });
-      }
-      if (w >= 6) {
-        enemies.push({
-          type: "gray",
-          count: Math.floor(w / 3),
-          delay: 1200,
-        });
-      }
+      enemies.push({
+        type: "arctic",
+        count: Math.floor(w / 3),
+        delay: 700,
+      });
+      enemies.push({
+        type: "gray",
+        count: Math.floor(w / 4),
+        delay: 1200,
+      });
     }
 
     waves.push({
       enemies,
-      spawnDelay: Math.max(600, 1200 - w * 40),
+      spawnDelay: Math.max(800, 1400 - w * 30),
     });
   }
 
@@ -436,6 +471,7 @@ export default function FarmDefense() {
     hoveredCell: GridPos | null;
     speedMultiplier: number;
     autoWave: boolean;
+    selectedUpgradeDefender: Defender | null;
   }>(null);
   const animFrameRef = useRef<number>(0);
   const [uiState, setUiState] = useState<{
@@ -450,18 +486,20 @@ export default function FarmDefense() {
     waveActive: boolean;
     waveCooldown: number;
     speedMultiplier: number;
+    selectedUpgradeDefender: Defender | null;
   }>({
     gameState: "menu",
-    eggs: 60,
+    eggs: 100,
     wave: 0,
-    coopHp: 10,
-    maxCoopHp: 10,
+    coopHp: 20,
+    maxCoopHp: 20,
     selectedDefender: null,
     score: 0,
     highScore: 0,
     waveActive: false,
     waveCooldown: 0,
     speedMultiplier: 1,
+    selectedUpgradeDefender: null,
   });
 
   const syncUI = useCallback(() => {
@@ -479,6 +517,7 @@ export default function FarmDefense() {
       waveActive: gs.waveActive,
       waveCooldown: gs.waveCooldown,
       speedMultiplier: gs.speedMultiplier,
+      selectedUpgradeDefender: gs.selectedUpgradeDefender,
     });
   }, []);
 
@@ -536,9 +575,9 @@ export default function FarmDefense() {
       enemies: [],
       projectiles: [],
       particles: [],
-      eggs: 60,
-      coopHp: 10,
-      maxCoopHp: 10,
+      eggs: 100,
+      coopHp: 20,
+      maxCoopHp: 20,
       wave: 0,
       maxWaves: 15,
       waves: generateWaves(),
@@ -562,6 +601,7 @@ export default function FarmDefense() {
       hoveredCell: null,
       speedMultiplier: 1,
       autoWave: false,
+      selectedUpgradeDefender: null,
     };
 
     syncUI();
@@ -780,7 +820,7 @@ export default function FarmDefense() {
 
         // Placement preview
         ctx.globalAlpha = 0.6;
-        drawDefender(ctx, { id: 0, type: selectedDefender, col, row, attackTimer: 0, animTimer: 0, target: null, kills: 0 }, cellSize);
+        drawDefender(ctx, { id: 0, type: selectedDefender, col, row, attackTimer: 0, animTimer: 0, target: null, kills: 0, level: 1 }, cellSize);
         ctx.globalAlpha = 1;
       }
     }
@@ -1069,6 +1109,63 @@ export default function FarmDefense() {
     }
 
     ctx.restore();
+
+    // Draw level indicators (small stars above the defender)
+    if (def.level > 1) {
+      const starY = def.row * cellSize + cellSize * 0.08;
+      const starCx = def.col * cellSize + cellSize / 2;
+      const starCount = def.level - 1;
+      const starSpacing = cellSize * 0.18;
+      const startX = starCx - ((starCount - 1) * starSpacing) / 2;
+
+      for (let i = 0; i < starCount; i++) {
+        const sx = startX + i * starSpacing;
+        const sr = cellSize * 0.06;
+        ctx.fillStyle = "#FFD700";
+        ctx.strokeStyle = "#AA8800";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        for (let p = 0; p < 5; p++) {
+          const angle = (p * 4 * Math.PI) / 5 - Math.PI / 2;
+          const r = p === 0 ? sr : sr;
+          const method = p === 0 ? "moveTo" : "lineTo";
+          ctx[method](sx + Math.cos(angle) * r, starY + Math.sin(angle) * r);
+          const innerAngle = angle + (2 * Math.PI) / 10;
+          ctx.lineTo(sx + Math.cos(innerAngle) * sr * 0.4, starY + Math.sin(innerAngle) * sr * 0.4);
+        }
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+      }
+    }
+
+    // Draw selection ring for upgrade-selected defender
+    const gs = gameStateRef.current;
+    if (gs?.selectedUpgradeDefender?.id === def.id) {
+      const ringCx = def.col * cellSize + cellSize / 2;
+      const ringCy = def.row * cellSize + cellSize / 2;
+      ctx.strokeStyle = "#FFD700";
+      ctx.lineWidth = 2;
+      ctx.setLineDash([4, 4]);
+      ctx.beginPath();
+      ctx.arc(ringCx, ringCy, cellSize * 0.45, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Draw range circle for selected defender
+      const defStats = DEFENDER_STATS[def.type];
+      const levelRangeMult = 1 + (def.level - 1) * 0.15;
+      ctx.globalAlpha = 0.12;
+      ctx.fillStyle = "#FFFFFF";
+      ctx.beginPath();
+      ctx.arc(ringCx, ringCy, defStats.range * levelRangeMult * cellSize, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalAlpha = 0.3;
+      ctx.strokeStyle = "#FFFFFF";
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+    }
   }
 
   function drawEnemy(
@@ -1231,7 +1328,7 @@ export default function FarmDefense() {
         gs.enemies.filter((e) => e.alive).length === 0
       ) {
         gs.waveActive = false;
-        gs.waveCooldown = 5;
+        gs.waveCooldown = 8;
 
         if (gs.wave >= gs.maxWaves) {
           gs.state = "won";
@@ -1333,7 +1430,9 @@ export default function FarmDefense() {
         if (def.attackTimer > 0) continue;
 
         const stats = DEFENDER_STATS[def.type];
-        const range = stats.range * gs.cellSize;
+        const levelDamageMult = 1 + (def.level - 1) * 0.3;
+        const levelRangeMult = 1 + (def.level - 1) * 0.15;
+        const range = stats.range * levelRangeMult * gs.cellSize;
         const boost = boostMap.get(def.id) || 0;
         const effectiveAttackSpeed = stats.attackSpeed * (1 - boost);
 
@@ -1358,7 +1457,7 @@ export default function FarmDefense() {
           def.target = closestEnemy;
           def.attackTimer = effectiveAttackSpeed;
 
-          const effectiveDamage = stats.damage * (1 + boost);
+          const effectiveDamage = stats.damage * levelDamageMult * (1 + boost);
 
           gs.projectiles.push({
             x: cx,
@@ -1564,7 +1663,7 @@ export default function FarmDefense() {
     const startPos = gs.path[0];
     if (!startPos) return null;
 
-    const waveScale = 1 + (gs.wave - 1) * 0.12;
+    const waveScale = 1 + (gs.wave - 1) * 0.08;
 
     const enemy: Enemy = {
       id: gs.nextId++,
@@ -1634,12 +1733,22 @@ export default function FarmDefense() {
       if (!pos) return;
       const { col, row } = pos;
 
+      const existingDefender = gs.defenders.find((d) => d.col === col && d.row === row);
+
+      if (existingDefender && !gs.selectedDefender) {
+        gs.selectedUpgradeDefender =
+          gs.selectedUpgradeDefender?.id === existingDefender.id ? null : existingDefender;
+        syncUI();
+        return;
+      }
+
+      gs.selectedUpgradeDefender = null;
+
       if (gs.selectedDefender) {
         const tile = gs.grid[row][col];
         if (tile !== "grass") return;
 
-        if (gs.defenders.find((d) => d.col === col && d.row === row))
-          return;
+        if (existingDefender) return;
 
         const stats = DEFENDER_STATS[gs.selectedDefender];
         if (gs.eggs < stats.cost) return;
@@ -1654,6 +1763,7 @@ export default function FarmDefense() {
           animTimer: Math.random() * Math.PI * 2,
           target: null,
           kills: 0,
+          level: 1,
         });
 
         // Placement particles
@@ -1744,6 +1854,7 @@ export default function FarmDefense() {
       const gs = gameStateRef.current;
       if (!gs) return;
       gs.selectedDefender = gs.selectedDefender === type ? null : type;
+      gs.selectedUpgradeDefender = null;
       syncUI();
     },
     [syncUI]
@@ -1760,6 +1871,50 @@ export default function FarmDefense() {
     const gs = gameStateRef.current;
     if (!gs) return;
     gs.speedMultiplier = gs.speedMultiplier === 1 ? 2 : 1;
+    syncUI();
+  }, [syncUI]);
+
+  const getUpgradeCost = useCallback((def: Defender): number => {
+    const baseCost = DEFENDER_STATS[def.type].cost;
+    if (def.level === 1) return Math.round(baseCost * 1.5);
+    if (def.level === 2) return Math.round(baseCost * 2);
+    return 0;
+  }, []);
+
+  const handleUpgradeDefender = useCallback(() => {
+    const gs = gameStateRef.current;
+    if (!gs || !gs.selectedUpgradeDefender) return;
+
+    const def = gs.defenders.find((d) => d.id === gs.selectedUpgradeDefender!.id);
+    if (!def || def.level >= 3) return;
+
+    const cost = getUpgradeCost(def);
+    if (gs.eggs < cost) return;
+
+    gs.eggs -= cost;
+    def.level++;
+
+    for (let i = 0; i < 8; i++) {
+      gs.particles.push({
+        x: def.col * gs.cellSize + gs.cellSize / 2,
+        y: def.row * gs.cellSize + gs.cellSize / 2,
+        vx: (Math.random() - 0.5) * 100,
+        vy: (Math.random() - 0.5) * 100,
+        life: 0.5,
+        maxLife: 0.5,
+        color: "#FFD700",
+        size: 4,
+      });
+    }
+
+    gs.selectedUpgradeDefender = def;
+    syncUI();
+  }, [syncUI, getUpgradeCost]);
+
+  const handleCloseUpgrade = useCallback(() => {
+    const gs = gameStateRef.current;
+    if (!gs) return;
+    gs.selectedUpgradeDefender = null;
     syncUI();
   }, [syncUI]);
 
@@ -1793,18 +1948,28 @@ export default function FarmDefense() {
             </span>
           </div>
           <div className="flex items-center gap-3">
-            <span>
-              Coop:{" "}
-              <span
-                className={
-                  uiState.coopHp <= 3
-                    ? "text-red-400"
-                    : uiState.coopHp <= 6
-                      ? "text-yellow-300"
-                      : "text-green-300"
-                }
-              >
-                {"❤️".repeat(Math.max(0, uiState.coopHp))}
+            <span className="flex items-center gap-1">
+              Coop:
+              <span className="relative inline-block w-20 h-3 bg-gray-700 rounded-full overflow-hidden border border-gray-500">
+                <span
+                  className={`absolute inset-y-0 left-0 rounded-full transition-all ${
+                    uiState.coopHp / uiState.maxCoopHp <= 0.25
+                      ? "bg-red-500"
+                      : uiState.coopHp / uiState.maxCoopHp <= 0.5
+                        ? "bg-yellow-400"
+                        : "bg-green-400"
+                  }`}
+                  style={{ width: `${Math.max(0, (uiState.coopHp / uiState.maxCoopHp) * 100)}%` }}
+                />
+              </span>
+              <span className={`text-xs ${
+                uiState.coopHp / uiState.maxCoopHp <= 0.25
+                  ? "text-red-400"
+                  : uiState.coopHp / uiState.maxCoopHp <= 0.5
+                    ? "text-yellow-300"
+                    : "text-green-300"
+              }`}>
+                {uiState.coopHp}/{uiState.maxCoopHp}
               </span>
             </span>
             <span className="text-yellow-200">
@@ -1862,6 +2027,10 @@ export default function FarmDefense() {
                 <div className="flex items-center gap-2">
                   <span className="text-2xl">🥚</span>
                   <span>Earn eggs by defeating enemies</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-2xl">⬆</span>
+                  <span>Tap placed defenders to upgrade them!</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-2xl">🏠</span>
@@ -1927,6 +2096,61 @@ export default function FarmDefense() {
             </div>
           </div>
         )}
+
+        {/* Upgrade panel */}
+        {isPlaying && uiState.selectedUpgradeDefender && (() => {
+          const def = uiState.selectedUpgradeDefender!;
+          const stats = DEFENDER_STATS[def.type];
+          const upgradeCost = getUpgradeCost(def);
+          const canUpgrade = def.level < 3 && uiState.eggs >= upgradeCost;
+          const levelDmg = stats.damage * (1 + (def.level - 1) * 0.3);
+          const levelRange = stats.range * (1 + (def.level - 1) * 0.15);
+          const nextDmg = def.level < 3 ? stats.damage * (1 + def.level * 0.3) : null;
+          const nextRange = def.level < 3 ? stats.range * (1 + def.level * 0.15) : null;
+
+          return (
+            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-1.5 rounded-xl px-4 py-3 text-white text-sm font-semibold shadow-xl min-w-[220px]"
+              style={{ background: "rgba(0,0,0,0.85)", border: "2px solid #DAA520" }}>
+              <div className="flex items-center gap-2">
+                <span className="text-lg">
+                  {def.type === "dog" ? "🐕" : def.type === "cat" ? "🐈" : def.type === "goose" ? "🪿" : "🐓"}
+                </span>
+                <span>{stats.name}</span>
+                <span className="text-yellow-300 text-xs">Lv.{def.level}</span>
+              </div>
+              <div className="flex gap-4 text-xs text-gray-300">
+                <span>DMG: {Math.round(levelDmg)}</span>
+                <span>RNG: {levelRange.toFixed(1)}</span>
+              </div>
+              {def.level < 3 ? (
+                <>
+                  <div className="text-xs text-gray-400">
+                    Next: DMG {Math.round(nextDmg!)} / RNG {nextRange!.toFixed(1)}
+                  </div>
+                  <button
+                    onClick={handleUpgradeDefender}
+                    disabled={!canUpgrade}
+                    className={`mt-1 rounded-lg px-4 py-1.5 text-sm font-bold transition-all active:scale-95 ${
+                      canUpgrade
+                        ? "bg-yellow-600 hover:bg-yellow-500 text-white"
+                        : "bg-gray-700 text-gray-500 cursor-not-allowed"
+                    }`}
+                  >
+                    Upgrade Lv.{def.level + 1} - 🥚{upgradeCost}
+                  </button>
+                </>
+              ) : (
+                <div className="text-xs text-yellow-400">MAX LEVEL</div>
+              )}
+              <button
+                onClick={handleCloseUpgrade}
+                className="text-xs text-gray-500 hover:text-gray-300 mt-0.5"
+              >
+                Close
+              </button>
+            </div>
+          );
+        })()}
       </div>
 
       {/* Bottom UI - visible during gameplay */}

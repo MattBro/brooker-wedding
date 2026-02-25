@@ -198,7 +198,7 @@ export default function GamesArcadePage() {
 
                 {/* Difficulty */}
                 <div className="mt-3 flex items-center justify-center gap-2">
-                  <span className="text-xs text-deep-plum/40">
+                  <span className="text-xs text-deep-plum/55">
                     Difficulty
                   </span>
                   <DifficultyDots count={game.difficulty} />
@@ -213,7 +213,7 @@ export default function GamesArcadePage() {
 
                 {/* Play button */}
                 {isAvailable && (
-                  <div className="mt-4 rounded-xl bg-soft-gold py-2.5 text-center text-sm font-semibold text-white transition-colors hover:bg-soft-gold-dark">
+                  <div className="mt-4 flex items-center justify-center rounded-xl bg-soft-gold py-2.5 text-center text-sm font-semibold text-white transition-colors hover:bg-soft-gold-dark" style={{ minHeight: 44 }}>
                     Play
                   </div>
                 )}
@@ -233,7 +233,7 @@ export default function GamesArcadePage() {
         </div>
 
         {/* Footer */}
-        <div className="mt-12 text-center text-xs text-sage/40">
+        <div className="mt-12 text-center text-xs text-sage/55">
           Matt & Brittany &middot; June 27, 2026
         </div>
       </div>

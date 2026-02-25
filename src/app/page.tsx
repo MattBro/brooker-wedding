@@ -181,13 +181,13 @@ export default function Home() {
             transition={{ delay: 2 }}
             className="mt-10 flex flex-col items-center gap-2 sm:mt-14"
           >
-            <span className="text-xs font-semibold tracking-widest text-warm-white/80 uppercase drop-shadow-[0_1px_2px_rgba(29,68,32,0.3)]">
+            <span className="text-xs font-semibold tracking-widest text-forest/60 uppercase">
               Explore
             </span>
             <motion.div
               animate={{ y: [0, 6, 0] }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              className="text-warm-white/60 drop-shadow-[0_1px_2px_rgba(29,68,32,0.3)]"
+              className="text-forest/40"
             >
               <svg
                 width="20"
@@ -324,14 +324,14 @@ export default function Home() {
                   <span className="font-[family-name:var(--font-cormorant-garant)] text-base font-semibold text-forest">
                     Emmett
                   </span>
-                  <span className="text-xs text-forest/40">Age 11</span>
+                  <span className="text-xs text-forest/50">Age 11</span>
                 </div>
                 <div className="flex flex-col items-center gap-1.5">
                   <span className="text-2xl sm:text-3xl">&#128142;</span>
                   <span className="font-[family-name:var(--font-cormorant-garant)] text-base font-semibold text-forest">
                     Sapphire
                   </span>
-                  <span className="text-xs text-forest/40">Age 8</span>
+                  <span className="text-xs text-forest/50">Age 8</span>
                 </div>
               </div>
             </div>
@@ -352,15 +352,15 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             className="mb-8 text-center"
           >
-            <p className="mb-2 text-xs font-medium tracking-[0.2em] text-forest/30 uppercase">
+            <p className="mb-2 text-xs font-medium tracking-[0.2em] text-forest/50 uppercase">
               While you wait
             </p>
-            <h2 className="font-[family-name:var(--font-cormorant-garant)] text-2xl font-bold text-forest/50 sm:text-3xl">
+            <h2 className="font-[family-name:var(--font-cormorant-garant)] text-2xl font-bold text-forest/70 sm:text-3xl">
               A Few Games for Fun
             </h2>
           </motion.div>
 
-          <div className="grid grid-cols-3 gap-3 sm:gap-4 lg:gap-5">
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:gap-5">
             {games.map((game, index) => (
               <GameCard key={game.title} {...game} index={index} />
             ))}
@@ -391,10 +391,10 @@ export default function Home() {
             ))}
           </div>
 
-          <p className="font-[family-name:var(--font-cormorant-garant)] text-xl font-semibold text-forest/50 sm:text-2xl">
+          <p className="font-[family-name:var(--font-cormorant-garant)] text-xl font-semibold text-forest/60 sm:text-2xl">
             Matt & Brittany
           </p>
-          <p className="mt-1 text-sm text-forest/30">June 27, 2026</p>
+          <p className="mt-1 text-sm text-forest/40">June 27, 2026</p>
 
           <div className="mt-5">
             <a
@@ -407,12 +407,12 @@ export default function Home() {
 
           <div className="mt-8 flex items-center justify-center gap-3">
             <div className="h-px w-12 bg-sage/10" />
-            <span className="text-xs text-forest/15">2026</span>
+            <span className="text-xs text-forest/30">2026</span>
             <div className="h-px w-12 bg-sage/10" />
           </div>
 
           <motion.p
-            className="mt-5 text-xs text-forest/15"
+            className="mt-5 text-xs text-forest/30"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
