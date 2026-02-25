@@ -414,7 +414,7 @@ function SuccessScreen({
               {name}, we&apos;re sorry you can&apos;t make it.
             </p>
             <p className="mt-2 text-sm text-deep-plum/50">
-              We&apos;ll be thinking of you and wishing you well on the big day.
+              We&apos;ll be thinking of you and wishing you were there to celebrate with us.
             </p>
           </>
         )}

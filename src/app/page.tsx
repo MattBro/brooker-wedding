@@ -106,7 +106,7 @@ export default function Home() {
               delay: 0.4,
               ease: "easeOut",
             }}
-            className="mb-3 text-center font-[family-name:var(--font-cormorant-garant)] text-5xl font-bold text-deep-plum sm:mb-4 sm:text-7xl md:text-8xl"
+            className="mb-3 text-center font-[family-name:var(--font-cormorant-garant)] text-5xl font-bold text-forest sm:mb-4 sm:text-7xl md:text-8xl"
           >
             Matt & Brittany
           </motion.h1>
@@ -116,9 +116,9 @@ export default function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.7 }}
-            className="mb-6 text-center text-lg font-medium text-deep-plum/70 sm:mb-8 sm:text-xl md:text-2xl"
+            className="mb-6 text-center text-lg font-medium text-forest/70 sm:mb-8 sm:text-xl md:text-2xl"
           >
-            invite you to celebrate their marriage
+            invite you to their wedding celebration
           </motion.p>
 
           {/* Date display */}
@@ -128,7 +128,7 @@ export default function Home() {
             transition={{ duration: 0.6, delay: 0.9 }}
             className="mb-8 sm:mb-10"
           >
-            <div className="relative rounded-2xl border border-soft-gold/20 bg-warm-white/60 px-8 py-5 text-center shadow-[0_4px_20px_rgba(212,165,116,0.08)] backdrop-blur-sm sm:px-12 sm:py-6">
+            <div className="relative rounded-2xl border border-soft-gold/25 bg-warm-white/60 px-8 py-5 text-center shadow-[0_4px_20px_rgba(196,154,60,0.1)] backdrop-blur-sm sm:px-12 sm:py-6">
               <p className="mb-1 text-xs font-medium tracking-[0.25em] text-soft-gold/70 uppercase sm:text-sm">
                 Join the Celebration
               </p>
@@ -151,13 +151,13 @@ export default function Home() {
             transition={{ delay: 2 }}
             className="mt-10 flex flex-col items-center gap-2 sm:mt-14"
           >
-            <span className="text-xs font-medium tracking-widest text-deep-plum/30 uppercase">
+            <span className="text-xs font-medium tracking-widest text-forest/30 uppercase">
               Explore
             </span>
             <motion.div
               animate={{ y: [0, 6, 0] }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              className="text-deep-plum/25"
+              className="text-forest/25"
             >
               <svg
                 width="20"
@@ -181,7 +181,7 @@ export default function Home() {
           ============================================= */}
       <section className="relative px-4 py-20 sm:py-28">
         {/* Soft gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-blush/20 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-sage/10 to-transparent" />
 
         <div className="relative mx-auto max-w-4xl">
           <motion.div
@@ -196,15 +196,15 @@ export default function Home() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
-                className="inline-block rounded-3xl border border-soft-gold/15 bg-warm-white/70 p-8 shadow-[0_8px_40px_rgba(212,165,116,0.08)] backdrop-blur-sm sm:p-12"
+                className="inline-block rounded-3xl border border-soft-gold/20 bg-warm-white/70 p-8 shadow-[0_8px_40px_rgba(196,154,60,0.1)] backdrop-blur-sm sm:p-12"
               >
-                <p className="mb-3 text-xs font-medium tracking-[0.25em] text-lavender/70 uppercase sm:text-sm">
+                <p className="mb-3 text-xs font-medium tracking-[0.25em] text-soft-gold/70 uppercase sm:text-sm">
                   We would love to see you there
                 </p>
-                <h3 className="mb-5 font-[family-name:var(--font-cormorant-garant)] text-3xl font-bold text-deep-plum sm:mb-6 sm:text-4xl">
+                <h3 className="mb-5 font-[family-name:var(--font-cormorant-garant)] text-3xl font-bold text-forest sm:mb-6 sm:text-4xl">
                   Join the Celebration
                 </h3>
-                <p className="mx-auto mb-7 max-w-md text-sm leading-relaxed text-deep-plum/60 sm:mb-8 sm:text-base">
+                <p className="mx-auto mb-7 max-w-md text-sm leading-relaxed text-forest/60 sm:mb-8 sm:text-base">
                   We would love for you to celebrate with us on the farm.
                   Great food, fun games, and even better company. What more
                   could you ask for?
@@ -235,7 +235,7 @@ export default function Home() {
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
                 <PixelButton href="/details" variant="success" size="md">
-                  Wedding Details
+                  Celebration Details
                 </PixelButton>
               </motion.div>
             </div>
@@ -253,15 +253,15 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             className="text-center"
           >
-            <div className="overflow-hidden rounded-3xl border border-lavender/15 bg-warm-white/70 px-6 py-10 shadow-[0_4px_30px_rgba(74,32,64,0.05)] backdrop-blur-sm sm:px-10 sm:py-14">
-              <h3 className="mb-6 font-[family-name:var(--font-cormorant-garant)] text-2xl font-bold text-deep-plum sm:mb-8 sm:text-3xl">
+            <div className="overflow-hidden rounded-3xl border border-sage/15 bg-warm-white/70 px-6 py-10 shadow-[0_4px_30px_rgba(29,68,32,0.05)] backdrop-blur-sm sm:px-10 sm:py-14">
+              <h3 className="mb-6 font-[family-name:var(--font-cormorant-garant)] text-2xl font-bold text-forest sm:mb-8 sm:text-3xl">
                 The Brooker Family
               </h3>
 
               <div className="mb-6 flex flex-wrap items-center justify-center gap-6 sm:gap-10">
                 <div className="flex flex-col items-center gap-2">
                   <span className="text-3xl sm:text-4xl">🤵</span>
-                  <span className="font-[family-name:var(--font-cormorant-garant)] text-lg font-semibold text-deep-plum">
+                  <span className="font-[family-name:var(--font-cormorant-garant)] text-lg font-semibold text-forest">
                     Matt
                   </span>
                 </div>
@@ -269,33 +269,33 @@ export default function Home() {
                   <motion.span
                     animate={{ scale: [1, 1.15, 1] }}
                     transition={{ duration: 2.5, repeat: Infinity }}
-                    className="text-2xl text-blush-dark sm:text-3xl"
+                    className="text-2xl text-soft-gold sm:text-3xl"
                   >
                     &hearts;
                   </motion.span>
                 </div>
                 <div className="flex flex-col items-center gap-2">
                   <span className="text-3xl sm:text-4xl">👰</span>
-                  <span className="font-[family-name:var(--font-cormorant-garant)] text-lg font-semibold text-deep-plum">
+                  <span className="font-[family-name:var(--font-cormorant-garant)] text-lg font-semibold text-forest">
                     Brittany
                   </span>
                 </div>
               </div>
 
-              <div className="mt-4 flex items-center justify-center gap-8 border-t border-lavender/10 pt-6 sm:gap-12">
+              <div className="mt-4 flex items-center justify-center gap-8 border-t border-sage/10 pt-6 sm:gap-12">
                 <div className="flex flex-col items-center gap-1.5">
                   <span className="text-2xl sm:text-3xl">&#127775;</span>
-                  <span className="font-[family-name:var(--font-cormorant-garant)] text-base font-semibold text-deep-plum">
+                  <span className="font-[family-name:var(--font-cormorant-garant)] text-base font-semibold text-forest">
                     Emmett
                   </span>
-                  <span className="text-xs text-deep-plum/40">Age 11</span>
+                  <span className="text-xs text-forest/40">Age 11</span>
                 </div>
                 <div className="flex flex-col items-center gap-1.5">
                   <span className="text-2xl sm:text-3xl">&#128142;</span>
-                  <span className="font-[family-name:var(--font-cormorant-garant)] text-base font-semibold text-deep-plum">
+                  <span className="font-[family-name:var(--font-cormorant-garant)] text-base font-semibold text-forest">
                     Sapphire
                   </span>
-                  <span className="text-xs text-deep-plum/40">Age 8</span>
+                  <span className="text-xs text-forest/40">Age 8</span>
                 </div>
               </div>
             </div>
@@ -313,10 +313,10 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             className="mb-8 text-center"
           >
-            <p className="mb-2 text-xs font-medium tracking-[0.2em] text-deep-plum/30 uppercase">
+            <p className="mb-2 text-xs font-medium tracking-[0.2em] text-forest/30 uppercase">
               While you wait
             </p>
-            <h2 className="font-[family-name:var(--font-cormorant-garant)] text-2xl font-bold text-deep-plum/50 sm:text-3xl">
+            <h2 className="font-[family-name:var(--font-cormorant-garant)] text-2xl font-bold text-forest/50 sm:text-3xl">
               A Few Games for Fun
             </h2>
           </motion.div>
@@ -339,7 +339,7 @@ export default function Home() {
             {[0, 1, 2, 3, 4].map((i) => (
               <motion.span
                 key={i}
-                className={`text-sm ${i % 2 === 0 ? "text-blush-dark/40" : "text-soft-gold/40"}`}
+                className={`text-sm ${i % 2 === 0 ? "text-soft-gold/40" : "text-sage/40"}`}
                 animate={{ y: [0, -3, 0] }}
                 transition={{
                   duration: 2,
@@ -352,10 +352,10 @@ export default function Home() {
             ))}
           </div>
 
-          <p className="font-[family-name:var(--font-cormorant-garant)] text-xl font-semibold text-deep-plum/50 sm:text-2xl">
+          <p className="font-[family-name:var(--font-cormorant-garant)] text-xl font-semibold text-forest/50 sm:text-2xl">
             Matt & Brittany
           </p>
-          <p className="mt-1 text-sm text-deep-plum/30">June 27, 2026</p>
+          <p className="mt-1 text-sm text-forest/30">June 27, 2026</p>
 
           <div className="mt-5">
             <a
@@ -368,12 +368,12 @@ export default function Home() {
 
           <div className="mt-8 flex items-center justify-center gap-3">
             <div className="h-px w-12 bg-sage/10" />
-            <span className="text-xs text-deep-plum/15">2026</span>
+            <span className="text-xs text-forest/15">2026</span>
             <div className="h-px w-12 bg-sage/10" />
           </div>
 
           <motion.p
-            className="mt-5 text-xs text-deep-plum/15"
+            className="mt-5 text-xs text-forest/15"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}

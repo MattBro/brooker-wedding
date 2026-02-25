@@ -15,12 +15,12 @@ interface GameCardProps {
 }
 
 const softColors: Record<string, { bg: string; accent: string }> = {
-  sage: { bg: "rgba(156,175,136,0.12)", accent: "#9CAF88" },
-  lavender: { bg: "rgba(184,169,201,0.12)", accent: "#B8A9C9" },
-  blush: { bg: "rgba(242,215,213,0.15)", accent: "#E4B8B5" },
-  gold: { bg: "rgba(212,165,116,0.12)", accent: "#D4A574" },
-  forest: { bg: "rgba(45,80,22,0.08)", accent: "#2D5016" },
-  plum: { bg: "rgba(74,32,64,0.08)", accent: "#4A2040" },
+  sage: { bg: "rgba(92,122,74,0.12)", accent: "#5C7A4A" },
+  lavender: { bg: "rgba(92,122,74,0.08)", accent: "#3E5A30" },
+  blush: { bg: "rgba(232,200,184,0.15)", accent: "#D4A894" },
+  gold: { bg: "rgba(196,154,60,0.12)", accent: "#C49A3C" },
+  forest: { bg: "rgba(29,68,32,0.1)", accent: "#1D4420" },
+  plum: { bg: "rgba(196,154,60,0.08)", accent: "#A67E28" },
 };
 
 const colorOrder = ["sage", "lavender", "blush", "gold", "forest", "plum"];
@@ -45,7 +45,7 @@ export default function GameCard({
       viewport={{ once: true, margin: "-50px" }}
     >
       <Link href={href} className="group block">
-        <div className="game-card-hover overflow-hidden rounded-2xl border border-lavender/15 bg-warm-white/80 backdrop-blur-sm">
+        <div className="game-card-hover overflow-hidden rounded-2xl border border-sage/15 bg-warm-white/80 backdrop-blur-sm">
           {/* Emoji display area */}
           <div
             className="relative flex h-36 items-center justify-center overflow-hidden sm:h-44"
@@ -98,7 +98,7 @@ export default function GameCard({
             </h3>
 
             {/* Description */}
-            <p className="mb-4 line-clamp-2 text-xs leading-relaxed text-deep-plum/60 sm:text-sm">
+            <p className="mb-4 line-clamp-2 text-xs leading-relaxed text-forest/60 sm:text-sm">
               {description}
             </p>
 
@@ -106,7 +106,7 @@ export default function GameCard({
             <div className="mb-4 flex items-center justify-between">
               {/* Difficulty */}
               <div className="flex items-center gap-1.5">
-                <span className="text-xs font-medium text-deep-plum/40">
+                <span className="text-xs font-medium text-forest/40">
                   Level
                 </span>
                 <div className="flex gap-0.5">
@@ -116,7 +116,7 @@ export default function GameCard({
                       className="h-2 w-2 rounded-full transition-colors"
                       style={{
                         backgroundColor:
-                          i < difficulty ? colors.accent : "rgba(74,32,64,0.08)",
+                          i < difficulty ? colors.accent : "rgba(29,68,32,0.08)",
                       }}
                     />
                   ))}
@@ -125,7 +125,7 @@ export default function GameCard({
 
               {/* High score */}
               <div className="flex items-center gap-1.5">
-                <span className="text-xs font-medium text-deep-plum/40">
+                <span className="text-xs font-medium text-forest/40">
                   Best
                 </span>
                 <span

@@ -40,11 +40,18 @@ const chapters = [
     side: "left" as const,
   },
   {
-    title: "The Wedding",
+    title: "We Got Married!",
     content:
-      "Matt & Brittany are gathering everyone they love for a magical celebration on the farm. This is the chapter we have been dreaming about.",
-    year: "June 27, 2026",
+      "On January 1, 2026, Matt & Brittany made it official and tied the knot. A perfect way to start the new year and the rest of their lives together.",
+    year: "January 1, 2026",
     side: "right" as const,
+  },
+  {
+    title: "The Celebration",
+    content:
+      "Now it's time to party! Matt & Brittany are gathering everyone they love for a wedding celebration on the farm. Great food, fun games, and the best company. This is the chapter we've been dreaming about.",
+    year: "June 27, 2026",
+    side: "left" as const,
   },
 ];
 
@@ -288,10 +295,10 @@ export default function StoryPage() {
         >
           <div className="soft-card mx-auto max-w-md p-8">
             <p className="font-[family-name:var(--font-cormorant-garant)] text-2xl font-semibold text-forest">
-              Be Part of Our Next Chapter
+              Come Celebrate With Us
             </p>
             <p className="mt-3 text-sm text-deep-plum/60">
-              We would love for you to join us on June 27, 2026!
+              We got married! Now join us on the farm June 27, 2026 to celebrate.
             </p>
             <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center">
               <Link

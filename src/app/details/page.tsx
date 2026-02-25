@@ -127,7 +127,7 @@ export default function DetailsPage() {
             Everything You Need to Know
           </div>
           <h1 className="font-[family-name:var(--font-display)] text-4xl font-semibold text-[#2D5016] sm:text-5xl md:text-6xl">
-            Wedding Details
+            Celebration Details
           </h1>
 
           {/* Botanical divider */}
@@ -189,7 +189,7 @@ export default function DetailsPage() {
               Saturday, June 27, 2026
             </p>
             <p>
-              Ceremony begins in the afternoon. Arrive early to explore the farm and find your perfect spot!
+              The celebration kicks off in the afternoon. Arrive early to explore the farm and settle in!
             </p>
           </SectionCard>
 
@@ -239,7 +239,7 @@ export default function DetailsPage() {
               <p>
                 We&apos;d love for you to bring a dish to share if you&apos;d like!
                 There will also be plenty of catered food, so absolutely no pressure.
-                It&apos;s a farm wedding, and sharing a meal together is part of the magic.
+                It&apos;s a farm party, and sharing a meal together is part of the magic.
               </p>
               <div className="rounded-xl border border-[#D4A574]/20 bg-[#D4A574]/5 p-4">
                 <p className="font-[family-name:var(--font-body)] text-sm font-medium text-[#D4A574]">

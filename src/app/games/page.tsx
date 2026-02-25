@@ -69,6 +69,15 @@ const GAMES: GameCard[] = [
     path: "/games/barn-cat-ninja",
     scoreKey: "barnCatNinja_highScore",
   },
+  {
+    id: "zoes-adventure",
+    title: "Zoe's Adventure",
+    description: "Run, jump, and collect treats with Zoe!",
+    difficulty: 3,
+    icon: "🐕",
+    path: "/games/zoes-adventure",
+    scoreKey: "zoesAdventure_highScore",
+  },
 ];
 
 function DifficultyDots({ count }: { count: number }) {
@@ -133,6 +142,7 @@ export default function GamesArcadePage() {
               "unicorn-taekwondo",
               "yoga-goat",
               "barn-cat-ninja",
+              "zoes-adventure",
             ].includes(game.id);
 
             const card = (
