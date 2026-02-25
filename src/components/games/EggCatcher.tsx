@@ -404,8 +404,10 @@ class EggCatcherEngine {
   resize(w: number, h: number) {
     this.canvasW = w;
     this.canvasH = h;
-    this.canvas.width = w;
-    this.canvas.height = h;
+    const dpr = window.devicePixelRatio || 1;
+    this.canvas.width = w * dpr;
+    this.canvas.height = h * dpr;
+    this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     this.basketBaseWidth = Math.max(50, w * 0.16);
     if (this.activePowerUps.wide <= 0) {
       this.basketWidth = this.basketBaseWidth;
@@ -1268,7 +1270,7 @@ class EggCatcherEngine {
 
   handlePointerDown(clientX: number, _clientY: number) {
     const rect = this.canvas.getBoundingClientRect();
-    const scaleX = this.canvas.width / rect.width;
+    const scaleX = this.canvasW / rect.width;
     const x = (clientX - rect.left) * scaleX;
 
     if (this.state === "start") {
@@ -1291,7 +1293,7 @@ class EggCatcherEngine {
 
   handlePointerMove(clientX: number) {
     const rect = this.canvas.getBoundingClientRect();
-    const scaleX = this.canvas.width / rect.width;
+    const scaleX = this.canvasW / rect.width;
     const x = (clientX - rect.left) * scaleX;
 
     if (this.state === "playing") {

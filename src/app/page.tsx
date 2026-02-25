@@ -97,7 +97,7 @@ export default function Home() {
             Together with their families
           </motion.p>
 
-          {/* Main title */}
+          {/* Main title with sparkle accents */}
           <motion.h1
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -106,7 +106,7 @@ export default function Home() {
               delay: 0.4,
               ease: "easeOut",
             }}
-            className="mb-3 text-center font-[family-name:var(--font-cormorant-garant)] text-5xl font-bold text-forest sm:mb-4 sm:text-7xl md:text-8xl"
+            className="fairy-sparkle mb-3 text-center font-[family-name:var(--font-cormorant-garant)] text-5xl font-bold text-forest sm:mb-4 sm:text-7xl md:text-8xl"
           >
             Matt & Brittany
           </motion.h1>
@@ -176,6 +176,9 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Enchanted section divider - toadstools and fairy lights */}
+      <WhimsicalDivider />
+
       {/* =============================================
           RSVP CTA SECTION
           ============================================= */}
@@ -201,7 +204,7 @@ export default function Home() {
                 <p className="mb-3 text-xs font-medium tracking-[0.25em] text-soft-gold/70 uppercase sm:text-sm">
                   We would love to see you there
                 </p>
-                <h3 className="mb-5 font-[family-name:var(--font-cormorant-garant)] text-3xl font-bold text-forest sm:mb-6 sm:text-4xl">
+                <h3 className="fairy-sparkle mb-5 font-[family-name:var(--font-cormorant-garant)] text-3xl font-bold text-forest sm:mb-6 sm:text-4xl">
                   Join the Celebration
                 </h3>
                 <p className="mx-auto mb-7 max-w-md text-sm leading-relaxed text-forest/60 sm:mb-8 sm:text-base">
@@ -243,6 +246,9 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Enchanted section divider - gnome and sparkles */}
+      <GnomeDivider />
+
       {/* =============================================
           FAMILY SECTION
           ============================================= */}
@@ -254,7 +260,7 @@ export default function Home() {
             className="text-center"
           >
             <div className="overflow-hidden rounded-3xl border border-sage/15 bg-warm-white/70 px-6 py-10 shadow-[0_4px_30px_rgba(29,68,32,0.05)] backdrop-blur-sm sm:px-10 sm:py-14">
-              <h3 className="mb-6 font-[family-name:var(--font-cormorant-garant)] text-2xl font-bold text-forest sm:mb-8 sm:text-3xl">
+              <h3 className="fairy-sparkle mb-6 font-[family-name:var(--font-cormorant-garant)] text-2xl font-bold text-forest sm:mb-8 sm:text-3xl">
                 The Brooker Family
               </h3>
 
@@ -302,6 +308,9 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
+
+      {/* Fairy string lights divider */}
+      <FairyLightDivider />
 
       {/* =============================================
           GAMES - subtle section at the bottom
@@ -379,10 +388,186 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ delay: 0.5 }}
           >
-            Made with love on the farm
+            Made with love and a little fairy dust
           </motion.p>
         </div>
       </footer>
+    </div>
+  );
+}
+
+function WhimsicalDivider() {
+  return (
+    <div className="relative flex items-center justify-center py-4">
+      <div className="flex items-end gap-3 opacity-30">
+        {/* Left sparkle */}
+        <motion.svg
+          width="8"
+          height="8"
+          viewBox="0 0 12 12"
+          fill="none"
+          animate={{ opacity: [0.3, 0.8, 0.3], scale: [0.8, 1, 0.8] }}
+          transition={{ duration: 2, repeat: Infinity, delay: 0 }}
+        >
+          <path d="M6 0 L7 4.5 L12 6 L7 7.5 L6 12 L5 7.5 L0 6 L5 4.5 Z" fill="#C49A3C" />
+        </motion.svg>
+
+        {/* Line */}
+        <div className="h-px w-12 bg-gradient-to-r from-transparent via-soft-gold/40 to-transparent sm:w-20" />
+
+        {/* Toadstool */}
+        <svg width="16" height="20" viewBox="0 0 24 28" fill="none" className="translate-y-1">
+          <rect x="9" y="16" width="6" height="12" rx="2" fill="#D4A894" opacity="0.6" />
+          <ellipse cx="12" cy="14" rx="12" ry="10" fill="#9B4040" opacity="0.5" />
+          <circle cx="7" cy="10" r="1.5" fill="#FDF8F0" opacity="0.6" />
+          <circle cx="14" cy="8" r="1.2" fill="#FDF8F0" opacity="0.6" />
+          <circle cx="17" cy="12" r="1" fill="#FDF8F0" opacity="0.5" />
+        </svg>
+
+        {/* Center sparkle */}
+        <motion.svg
+          width="10"
+          height="10"
+          viewBox="0 0 12 12"
+          fill="none"
+          animate={{ opacity: [0.4, 1, 0.4], scale: [0.9, 1.1, 0.9] }}
+          transition={{ duration: 2.5, repeat: Infinity, delay: 0.5 }}
+        >
+          <path d="M6 0 L7 4.5 L12 6 L7 7.5 L6 12 L5 7.5 L0 6 L5 4.5 Z" fill="#C49A3C" />
+        </motion.svg>
+
+        {/* Toadstool (smaller) */}
+        <svg width="12" height="16" viewBox="0 0 24 28" fill="none" className="translate-y-1.5">
+          <rect x="9" y="16" width="6" height="12" rx="2" fill="#D4A894" opacity="0.5" />
+          <ellipse cx="12" cy="14" rx="12" ry="10" fill="#9B4040" opacity="0.45" />
+          <circle cx="8" cy="11" r="1.5" fill="#FDF8F0" opacity="0.5" />
+          <circle cx="15" cy="9" r="1" fill="#FDF8F0" opacity="0.5" />
+        </svg>
+
+        {/* Line */}
+        <div className="h-px w-12 bg-gradient-to-r from-transparent via-soft-gold/40 to-transparent sm:w-20" />
+
+        {/* Right sparkle */}
+        <motion.svg
+          width="8"
+          height="8"
+          viewBox="0 0 12 12"
+          fill="none"
+          animate={{ opacity: [0.3, 0.8, 0.3], scale: [0.8, 1, 0.8] }}
+          transition={{ duration: 2, repeat: Infinity, delay: 1 }}
+        >
+          <path d="M6 0 L7 4.5 L12 6 L7 7.5 L6 12 L5 7.5 L0 6 L5 4.5 Z" fill="#C49A3C" />
+        </motion.svg>
+      </div>
+    </div>
+  );
+}
+
+function GnomeDivider() {
+  return (
+    <div className="relative flex items-center justify-center py-4">
+      <div className="flex items-end gap-4 opacity-25">
+        {/* Sparkle */}
+        <motion.svg
+          width="6"
+          height="6"
+          viewBox="0 0 12 12"
+          fill="none"
+          animate={{ opacity: [0.3, 0.9, 0.3] }}
+          transition={{ duration: 2.2, repeat: Infinity }}
+        >
+          <path d="M6 0 L7 4.5 L12 6 L7 7.5 L6 12 L5 7.5 L0 6 L5 4.5 Z" fill="#C49A3C" />
+        </motion.svg>
+
+        {/* Line */}
+        <div className="h-px w-16 bg-gradient-to-r from-transparent via-sage/30 to-transparent sm:w-24" />
+
+        {/* Gnome silhouette */}
+        <svg width="14" height="22" viewBox="0 0 14 22" fill="none" className="translate-y-0.5">
+          <polygon points="7,0 11,10 3,10" fill="#1D4420" opacity="0.6" />
+          <circle cx="7" cy="12" r="3.5" fill="#1D4420" opacity="0.5" />
+          <ellipse cx="7" cy="18" rx="4.5" ry="4" fill="#1D4420" opacity="0.5" />
+          <ellipse cx="7" cy="15" rx="3" ry="3.5" fill="#1D4420" opacity="0.4" />
+        </svg>
+
+        {/* Tiny toadstool */}
+        <svg width="10" height="12" viewBox="0 0 24 28" fill="none" className="translate-y-2">
+          <rect x="9" y="16" width="6" height="12" rx="2" fill="#D4A894" opacity="0.5" />
+          <ellipse cx="12" cy="14" rx="12" ry="10" fill="#9B4040" opacity="0.4" />
+          <circle cx="8" cy="11" r="1.5" fill="#FDF8F0" opacity="0.5" />
+          <circle cx="15" cy="10" r="1" fill="#FDF8F0" opacity="0.4" />
+        </svg>
+
+        {/* Line */}
+        <div className="h-px w-16 bg-gradient-to-r from-transparent via-sage/30 to-transparent sm:w-24" />
+
+        {/* Sparkle */}
+        <motion.svg
+          width="6"
+          height="6"
+          viewBox="0 0 12 12"
+          fill="none"
+          animate={{ opacity: [0.3, 0.9, 0.3] }}
+          transition={{ duration: 2.2, repeat: Infinity, delay: 1.1 }}
+        >
+          <path d="M6 0 L7 4.5 L12 6 L7 7.5 L6 12 L5 7.5 L0 6 L5 4.5 Z" fill="#C49A3C" />
+        </motion.svg>
+      </div>
+    </div>
+  );
+}
+
+function FairyLightDivider() {
+  const bulbs = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+
+  return (
+    <div className="relative flex items-center justify-center overflow-hidden py-6">
+      <div className="relative">
+        {/* The wire/string */}
+        <svg
+          width="280"
+          height="30"
+          viewBox="0 0 280 30"
+          fill="none"
+          className="opacity-20"
+        >
+          <path
+            d="M0 5 Q35 25 70 8 Q105 25 140 8 Q175 25 210 8 Q245 25 280 5"
+            stroke="#5C7A4A"
+            strokeWidth="1"
+            fill="none"
+          />
+        </svg>
+
+        {/* Light bulbs along the string */}
+        <div className="absolute inset-0 flex items-start justify-between px-2">
+          {bulbs.map((i) => (
+            <motion.div
+              key={i}
+              className="mt-1"
+              style={{
+                marginTop: i % 2 === 0 ? "2px" : "14px",
+              }}
+              animate={{
+                opacity: [0.2, 0.6, 0.2],
+              }}
+              transition={{
+                duration: 2 + (i % 3) * 0.5,
+                repeat: Infinity,
+                delay: i * 0.3,
+              }}
+            >
+              <div
+                className="h-1.5 w-1.5 rounded-full"
+                style={{
+                  background: "radial-gradient(circle, rgba(196,154,60,0.9) 0%, rgba(196,154,60,0.3) 70%, transparent 100%)",
+                  boxShadow: "0 0 4px rgba(196,154,60,0.4)",
+                }}
+              />
+            </motion.div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

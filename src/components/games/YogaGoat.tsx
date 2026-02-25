@@ -100,22 +100,32 @@ export default function YogaGoat() {
     const container = containerRef.current;
     if (!canvas || !container) return;
     const rect = container.getBoundingClientRect();
-    canvas.width = rect.width;
-    canvas.height = rect.height;
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    const ctx = canvas.getContext('2d');
+    if (ctx) ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const logicalW = rect.width;
+    const logicalH = rect.height;
     if (gameRef.current) {
-      gameRef.current.canvasW = canvas.width;
-      gameRef.current.canvasH = canvas.height;
-      gameRef.current.postX = canvas.width / 2;
-      gameRef.current.postY = canvas.height * 0.6;
+      gameRef.current.canvasW = logicalW;
+      gameRef.current.canvasH = logicalH;
+      gameRef.current.postX = logicalW / 2;
+      gameRef.current.postY = logicalH * 0.6;
     }
   }, []);
 
   const initGame = useCallback(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    const container = containerRef.current;
+    if (!canvas || !container) return;
+
+    const rect = container.getBoundingClientRect();
+    const logicalW = rect.width;
+    const logicalH = rect.height;
 
     const clouds = Array.from({ length: 4 }, (_, i) => ({
-      x: i * (canvas.width / 3) + Math.random() * 80,
+      x: i * (logicalW / 3) + Math.random() * 80,
       y: 20 + Math.random() * 50,
       w: 50 + Math.random() * 60,
       speed: 0.15 + Math.random() * 0.2,
@@ -136,16 +146,16 @@ export default function YogaGoat() {
       transitionTimer: 0,
       zenMeter: 0,
       frame: 0,
-      canvasW: canvas.width,
-      canvasH: canvas.height,
+      canvasW: logicalW,
+      canvasH: logicalH,
       birds: [],
       guineaHens: [],
       particles: [],
-      mouseX: canvas.width / 2,
+      mouseX: logicalW / 2,
       tiltX: 0,
       usingTilt: false,
-      postX: canvas.width / 2,
-      postY: canvas.height * 0.6,
+      postX: logicalW / 2,
+      postY: logicalH * 0.6,
       goatAngle: 0,
       clouds,
       zenBonus: 0,
@@ -653,10 +663,11 @@ export default function YogaGoat() {
   }, [addParticles, nextPose, loseLife]);
 
   const startGame = useCallback(() => {
+    resize();
     initGame();
     setScore(0);
     setGameState('playing');
-  }, [initGame]);
+  }, [resize, initGame]);
 
   useEffect(() => {
     if (gameState === 'playing') {
@@ -682,7 +693,16 @@ export default function YogaGoat() {
       const canvas = canvasRef.current;
       if (!g || !canvas) return;
       const rect = canvas.getBoundingClientRect();
-      g.mouseX = ((e.clientX - rect.left) / rect.width) * canvas.width;
+      g.mouseX = ((e.clientX - rect.left) / rect.width) * g.canvasW;
+    };
+
+    const handleTouchStart = (e: TouchEvent) => {
+      e.preventDefault();
+      const g = gameRef.current;
+      const canvas = canvasRef.current;
+      if (!g || !canvas) return;
+      const rect = canvas.getBoundingClientRect();
+      g.mouseX = ((e.touches[0].clientX - rect.left) / rect.width) * g.canvasW;
     };
 
     const handleTouchMove = (e: TouchEvent) => {
@@ -691,7 +711,7 @@ export default function YogaGoat() {
       const canvas = canvasRef.current;
       if (!g || !canvas) return;
       const rect = canvas.getBoundingClientRect();
-      g.mouseX = ((e.touches[0].clientX - rect.left) / rect.width) * canvas.width;
+      g.mouseX = ((e.touches[0].clientX - rect.left) / rect.width) * g.canvasW;
     };
 
     const handleDeviceOrientation = (e: DeviceOrientationEvent) => {
@@ -705,11 +725,13 @@ export default function YogaGoat() {
 
     const canvas = canvasRef.current;
     window.addEventListener('mousemove', handleMouseMove);
+    canvas?.addEventListener('touchstart', handleTouchStart, { passive: false });
     canvas?.addEventListener('touchmove', handleTouchMove, { passive: false });
     window.addEventListener('deviceorientation', handleDeviceOrientation);
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
+      canvas?.removeEventListener('touchstart', handleTouchStart);
       canvas?.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('deviceorientation', handleDeviceOrientation);
     };
@@ -755,7 +777,7 @@ export default function YogaGoat() {
           <div style={{ fontSize: '40px', marginBottom: '12px' }}>🐐🧘</div>
           <div style={{ fontSize: '8px', lineHeight: 2.2, maxWidth: '300px', marginBottom: '16px' }}>
             <p>Balance the goat on the fence post!</p>
-            <p>MOVE MOUSE / TILT DEVICE to balance</p>
+            <p>TOUCH / MOUSE / TILT to balance</p>
             <p>Stay in the GREEN ZONE to score!</p>
             <p>Hold each pose for the timer!</p>
             <p>Watch out for birds and guinea hens!</p>

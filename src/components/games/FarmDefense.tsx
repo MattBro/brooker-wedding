@@ -204,7 +204,7 @@ const ENEMY_STATS: Record<
 > = {
   red: {
     hp: 60,
-    speed: 1.5,
+    speed: 2.2,
     reward: 5,
     color: "#CC4400",
     name: "Red Fox",
@@ -212,7 +212,7 @@ const ENEMY_STATS: Record<
   },
   arctic: {
     hp: 40,
-    speed: 2.5,
+    speed: 3.5,
     reward: 7,
     color: "#E8E8F0",
     name: "Arctic Fox",
@@ -220,7 +220,7 @@ const ENEMY_STATS: Record<
   },
   gray: {
     hp: 150,
-    speed: 0.8,
+    speed: 1.2,
     reward: 12,
     color: "#666677",
     name: "Gray Fox",
@@ -228,7 +228,7 @@ const ENEMY_STATS: Record<
   },
   chief: {
     hp: 500,
-    speed: 0.6,
+    speed: 0.9,
     reward: 50,
     color: "#880000",
     name: "Fox Chief",
@@ -1603,20 +1603,36 @@ export default function FarmDefense() {
   // INPUT HANDLING
   // =========================================================================
 
-  const handleCanvasClick = useCallback(
-    (clientX: number, clientY: number) => {
+  const canvasToGrid = useCallback(
+    (clientX: number, clientY: number): GridPos | null => {
       const canvas = canvasRef.current;
       const gs = gameStateRef.current;
-      if (!canvas || !gs || gs.state !== "playing") return;
+      if (!canvas || !gs) return null;
 
       const rect = canvas.getBoundingClientRect();
-      const x = clientX - rect.left - gs.offsetX;
-      const y = clientY - rect.top - gs.offsetY;
-
+      const scaleX = gs.canvasWidth / rect.width;
+      const scaleY = gs.canvasHeight / rect.height;
+      const canvasX = (clientX - rect.left) * scaleX;
+      const canvasY = (clientY - rect.top) * scaleY;
+      const x = canvasX - gs.offsetX;
+      const y = canvasY - gs.offsetY;
       const col = Math.floor(x / gs.cellSize);
       const row = Math.floor(y / gs.cellSize);
 
-      if (col < 0 || col >= gs.cols || row < 0 || row >= gs.rows) return;
+      if (col < 0 || col >= gs.cols || row < 0 || row >= gs.rows) return null;
+      return { col, row };
+    },
+    []
+  );
+
+  const handleCanvasClick = useCallback(
+    (clientX: number, clientY: number) => {
+      const gs = gameStateRef.current;
+      if (!gs || gs.state !== "playing") return;
+
+      const pos = canvasToGrid(clientX, clientY);
+      if (!pos) return;
+      const { col, row } = pos;
 
       if (gs.selectedDefender) {
         const tile = gs.grid[row][col];
@@ -1657,29 +1673,16 @@ export default function FarmDefense() {
         syncUI();
       }
     },
-    [syncUI]
+    [canvasToGrid, syncUI]
   );
 
   const handleCanvasMove = useCallback(
     (clientX: number, clientY: number) => {
-      const canvas = canvasRef.current;
       const gs = gameStateRef.current;
-      if (!canvas || !gs) return;
-
-      const rect = canvas.getBoundingClientRect();
-      const x = clientX - rect.left - gs.offsetX;
-      const y = clientY - rect.top - gs.offsetY;
-
-      const col = Math.floor(x / gs.cellSize);
-      const row = Math.floor(y / gs.cellSize);
-
-      if (col >= 0 && col < gs.cols && row >= 0 && row < gs.rows) {
-        gs.hoveredCell = { col, row };
-      } else {
-        gs.hoveredCell = null;
-      }
+      if (!gs) return;
+      gs.hoveredCell = canvasToGrid(clientX, clientY);
     },
-    []
+    [canvasToGrid]
   );
 
   // =========================================================================
@@ -1774,7 +1777,7 @@ export default function FarmDefense() {
   const isEnd = uiState.gameState === "won" || uiState.gameState === "lost";
 
   return (
-    <div className="fixed inset-0 flex flex-col bg-[#87CEEB] select-none overflow-hidden">
+    <div className="fixed inset-0 flex flex-col bg-[#87CEEB] select-none overflow-hidden" style={{ touchAction: 'none' }}>
       {/* Top bar - visible during gameplay */}
       {isPlaying && (
         <div

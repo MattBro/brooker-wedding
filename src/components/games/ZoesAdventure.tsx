@@ -174,10 +174,13 @@ export default function ZoesAdventure({ onGameOver }: ZoesAdventureProps) {
     const canvas = canvasRef.current;
     const container = containerRef.current;
     if (!canvas || !container) return;
+    const dpr = window.devicePixelRatio || 1;
     const w = Math.min(container.getBoundingClientRect().width, 500);
     const h = 600;
-    canvas.width = w;
-    canvas.height = h;
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    const ctx = canvas.getContext('2d');
+    if (ctx) ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     if (gameRef.current) {
       gameRef.current.canvasW = w;
       gameRef.current.canvasH = h;

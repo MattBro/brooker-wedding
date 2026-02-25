@@ -95,25 +95,35 @@ export default function UnicornTaekwondo() {
     const container = containerRef.current;
     if (!canvas || !container) return;
     const rect = container.getBoundingClientRect();
-    canvas.width = rect.width;
-    canvas.height = rect.height;
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    const ctx = canvas.getContext('2d');
+    if (ctx) ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const logicalW = rect.width;
+    const logicalH = rect.height;
     if (gameRef.current) {
-      gameRef.current.canvasW = canvas.width;
-      gameRef.current.canvasH = canvas.height;
-      gameRef.current.kickZoneX = canvas.width / 2;
-      gameRef.current.kickZoneY = canvas.height * 0.55;
-      gameRef.current.kickZoneR = Math.min(canvas.width, canvas.height) * 0.1;
-      gameRef.current.unicornY = canvas.height * 0.45;
+      gameRef.current.canvasW = logicalW;
+      gameRef.current.canvasH = logicalH;
+      gameRef.current.kickZoneX = logicalW / 2;
+      gameRef.current.kickZoneY = logicalH * 0.55;
+      gameRef.current.kickZoneR = Math.min(logicalW, logicalH) * 0.1;
+      gameRef.current.unicornY = logicalH * 0.45;
     }
   }, []);
 
   const initGame = useCallback(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    const container = containerRef.current;
+    if (!canvas || !container) return;
+
+    const rect = container.getBoundingClientRect();
+    const logicalW = rect.width;
+    const logicalH = rect.height;
 
     const bgStars = Array.from({ length: 40 }, () => ({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
+      x: Math.random() * logicalW,
+      y: Math.random() * logicalH,
       size: 1 + Math.random() * 2,
       speed: 0.2 + Math.random() * 0.5,
       color: ['#FF69B4', '#FFD700', '#87CEEB', '#FF6347', '#7B68EE'][Math.floor(Math.random() * 5)],
@@ -130,17 +140,17 @@ export default function UnicornTaekwondo() {
       sparkles: [],
       floatingTexts: [],
       frame: 0,
-      canvasW: canvas.width,
-      canvasH: canvas.height,
-      kickZoneX: canvas.width / 2,
-      kickZoneY: canvas.height * 0.55,
-      kickZoneR: Math.min(canvas.width, canvas.height) * 0.1,
+      canvasW: logicalW,
+      canvasH: logicalH,
+      kickZoneX: logicalW / 2,
+      kickZoneY: logicalH * 0.55,
+      kickZoneR: Math.min(logicalW, logicalH) * 0.1,
       unicornKicking: 0,
       kickDir: 'right',
       spawnTimer: 0,
       spawnInterval: 120,
       difficulty: 1,
-      unicornY: canvas.height * 0.45,
+      unicornY: logicalH * 0.45,
       bgStars,
     };
   }, []);
@@ -652,13 +662,14 @@ export default function UnicornTaekwondo() {
   }, [spawnTarget, addSparkles, addFloatingText]);
 
   const startGame = useCallback(() => {
+    resize();
     initGame();
     setScore(0);
     setLives(3);
     setBelt('white');
     setCombo(0);
     setGameState('playing');
-  }, [initGame]);
+  }, [resize, initGame]);
 
   useEffect(() => {
     if (gameState === 'playing') {
@@ -684,8 +695,8 @@ export default function UnicornTaekwondo() {
     const getCanvasPos = (clientX: number, clientY: number) => {
       const rect = canvas.getBoundingClientRect();
       return {
-        x: ((clientX - rect.left) / rect.width) * canvas.width,
-        y: ((clientY - rect.top) / rect.height) * canvas.height,
+        x: clientX - rect.left,
+        y: clientY - rect.top,
       };
     };
 

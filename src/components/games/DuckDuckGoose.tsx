@@ -82,29 +82,38 @@ export default function DuckDuckGoose() {
     const container = containerRef.current;
     if (!canvas || !container) return;
     const rect = container.getBoundingClientRect();
-    canvas.width = rect.width;
-    canvas.height = rect.height;
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    const ctx = canvas.getContext('2d');
+    if (ctx) ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const logicalW = rect.width;
+    const logicalH = rect.height;
     if (gameRef.current) {
-      gameRef.current.canvasW = canvas.width;
-      gameRef.current.canvasH = canvas.height;
-      gameRef.current.groundY = canvas.height - 60;
+      gameRef.current.canvasW = logicalW;
+      gameRef.current.canvasH = logicalH;
+      gameRef.current.groundY = logicalH - 60;
     }
   }, []);
 
   const initGame = useCallback(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
-    const groundY = canvas.height - 60;
+    const container = containerRef.current;
+    if (!canvas || !container) return;
+    const rect = container.getBoundingClientRect();
+    const logicalW = rect.width;
+    const logicalH = rect.height;
+    const groundY = logicalH - 60;
 
     const clouds = Array.from({ length: 5 }, (_, i) => ({
-      x: (i * canvas.width) / 3 + Math.random() * 100,
+      x: (i * logicalW) / 3 + Math.random() * 100,
       y: 20 + Math.random() * 60,
       w: 40 + Math.random() * 60,
       speed: 0.2 + Math.random() * 0.3,
     }));
 
     const grassTufts = Array.from({ length: 40 }, (_, i) => ({
-      x: i * (canvas.width / 20) + Math.random() * 30,
+      x: i * (logicalW / 20) + Math.random() * 30,
       type: Math.floor(Math.random() * 3),
     }));
 
@@ -123,11 +132,11 @@ export default function DuckDuckGoose() {
       invincible: 0,
       speedBoost: 0,
       hitCooldown: 0,
-      canvasW: canvas.width,
-      canvasH: canvas.height,
-      lastObstacleX: canvas.width + 100,
-      lastCollectibleX: canvas.width + 50,
-      lastPowerUpX: canvas.width + 400,
+      canvasW: logicalW,
+      canvasH: logicalH,
+      lastObstacleX: logicalW + 100,
+      lastCollectibleX: logicalW + 50,
+      lastPowerUpX: logicalW + 400,
       duckAnimFrame: 0,
       gooseAnimFrame: 0,
       clouds,
@@ -654,10 +663,11 @@ export default function DuckDuckGoose() {
   }, [spawnObstacle, spawnCollectible, spawnPowerUp, addParticles]);
 
   const startGame = useCallback(() => {
+    resize();
     initGame();
     setScore(0);
     setGameState('playing');
-  }, [initGame]);
+  }, [resize, initGame]);
 
   useEffect(() => {
     if (gameState === 'playing') {

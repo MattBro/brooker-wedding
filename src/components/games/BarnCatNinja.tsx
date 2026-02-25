@@ -89,20 +89,30 @@ export default function BarnCatNinja() {
     const container = containerRef.current;
     if (!canvas || !container) return;
     const rect = container.getBoundingClientRect();
-    canvas.width = rect.width;
-    canvas.height = rect.height;
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    const ctx = canvas.getContext('2d');
+    if (ctx) ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const logicalW = rect.width;
+    const logicalH = rect.height;
     if (gameRef.current) {
-      gameRef.current.canvasW = canvas.width;
-      gameRef.current.canvasH = canvas.height;
+      gameRef.current.canvasW = logicalW;
+      gameRef.current.canvasH = logicalH;
     }
   }, []);
 
   const initGame = useCallback(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    const container = containerRef.current;
+    if (!canvas || !container) return;
+
+    const rect = container.getBoundingClientRect();
+    const logicalW = rect.width;
+    const logicalH = rect.height;
 
     const barnBeams = Array.from({ length: 6 }, (_, i) => ({
-      x: (i + 0.5) * (canvas.width / 6),
+      x: (i + 0.5) * (logicalW / 6),
       y: 0,
       w: 8 + Math.random() * 4,
       angle: (Math.random() - 0.5) * 0.3,
@@ -119,8 +129,8 @@ export default function BarnCatNinja() {
       particles: [],
       floatingTexts: [],
       frame: 0,
-      canvasW: canvas.width,
-      canvasH: canvas.height,
+      canvasW: logicalW,
+      canvasH: logicalH,
       spawnTimer: 0,
       spawnInterval: 80,
       difficulty: 1,
@@ -767,10 +777,11 @@ export default function BarnCatNinja() {
   }, [spawnWave, addParticles, addFloatingText, sliceItem]);
 
   const startGame = useCallback(() => {
+    resize();
     initGame();
     setScore(0);
     setGameState('playing');
-  }, [initGame]);
+  }, [resize, initGame]);
 
   useEffect(() => {
     if (gameState === 'playing') {
@@ -796,8 +807,8 @@ export default function BarnCatNinja() {
     const getPos = (clientX: number, clientY: number) => {
       const rect = canvas.getBoundingClientRect();
       return {
-        x: ((clientX - rect.left) / rect.width) * canvas.width,
-        y: ((clientY - rect.top) / rect.height) * canvas.height,
+        x: clientX - rect.left,
+        y: clientY - rect.top,
       };
     };
 
