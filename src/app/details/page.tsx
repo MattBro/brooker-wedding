@@ -189,7 +189,7 @@ export default function DetailsPage() {
               Saturday, June 27, 2026
             </p>
             <p>
-              The celebration kicks off in the afternoon. Arrive early to explore the farm and settle in!
+              The celebration kicks off in the afternoon. Arrive early to explore our farm and settle in!
             </p>
           </SectionCard>
 
@@ -210,13 +210,8 @@ export default function DetailsPage() {
               49 Clarks Mill Rd, Greenwich, NY 12834
             </p>
             <p>
-              Address details coming soon -- check back or reach out to us!
+              Our farm in beautiful Greenwich, NY. We can&apos;t wait to welcome you!
             </p>
-            <div className="mt-3 rounded-xl border border-[#B8A9C9]/20 bg-[#B8A9C9]/5 p-3">
-              <p className="text-sm text-[#2D5016]/60">
-                Parking is available on the property. Follow the signs from the main road.
-              </p>
-            </div>
           </SectionCard>
 
           <BotanicalDivider />

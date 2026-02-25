@@ -19,9 +19,9 @@ const chapters = [
     side: "right" as const,
   },
   {
-    title: "Growing Our Family",
+    title: "Becoming a Family",
     content:
-      "The family grew with Emmett (now 11) and Sapphire (now 8), turning their lives into a daily adventure filled with laughter, love, and a little bit of beautiful chaos.",
+      "When Brittany came into Matt's life, she also came into the lives of Emmett (now 11) and Sapphire (now 8). What started as new friendships blossomed into a family full of laughter, love, and a little bit of beautiful chaos.",
     year: "Our Greatest Joy",
     side: "left" as const,
   },
@@ -49,7 +49,7 @@ const chapters = [
   {
     title: "The Celebration",
     content:
-      "Now it's time to party! Matt & Brittany are gathering everyone they love for a wedding celebration on the farm. Great food, fun games, and the best company. This is the chapter we've been dreaming about.",
+      "Now it's time to party! Matt & Brittany are gathering everyone they love for a wedding celebration on our farm. Great food, fun games, and the best company. This is the chapter we've been dreaming about.",
     year: "June 27, 2026",
     side: "left" as const,
   },
@@ -298,7 +298,7 @@ export default function StoryPage() {
               Come Celebrate With Us
             </p>
             <p className="mt-3 text-sm text-deep-plum/60">
-              We got married! Now join us on the farm June 27, 2026 to celebrate.
+              We got married! Now join us on our farm June 27, 2026 to celebrate.
             </p>
             <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center">
               <Link

@@ -238,7 +238,7 @@ export default function Home() {
                   Join the Celebration
                 </h3>
                 <p className="mx-auto mb-7 max-w-md text-sm leading-relaxed text-forest/60 sm:mb-8 sm:text-base">
-                  We would love for you to celebrate with us on the farm.
+                  We would love for you to celebrate with us on our farm.
                   Great food, fun games, and even better company. What more
                   could you ask for?
                 </p>

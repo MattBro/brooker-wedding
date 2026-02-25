@@ -386,7 +386,7 @@ function SuccessScreen({
               {name}, your RSVP has been received.
             </p>
             <p className="mt-2 text-sm text-deep-plum/60">
-              See you at the farm on June 27, 2026.
+              See you at our farm on June 27, 2026.
             </p>
             <div className="mx-auto mt-6 flex items-center justify-center gap-3">
               <div className="h-px w-12 bg-sage/30" />
