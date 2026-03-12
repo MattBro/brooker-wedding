@@ -8,6 +8,8 @@ CREATE TABLE IF NOT EXISTS rsvps (
   potluck_dish TEXT,
   message TEXT,
   phone VARCHAR(20),
+  adult_count INTEGER DEFAULT 1,
+  child_count INTEGER DEFAULT 0,
   public_display BOOLEAN DEFAULT false,
   updated_at TIMESTAMP DEFAULT NOW(),
   created_at TIMESTAMP DEFAULT NOW()

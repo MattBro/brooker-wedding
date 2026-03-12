@@ -11,6 +11,8 @@ interface RsvpData {
   email: string;
   attending: boolean;
   guest_count: number;
+  adult_count: number;
+  child_count: number;
   dietary_restrictions: string;
   potluck_dish: string;
   message: string;
@@ -186,7 +188,8 @@ function RsvpForm({ initialData, isEditing, onSuccess, onCancel }: { initialData
   const [name, setName] = useState(initialData?.name ?? "");
   const [email, setEmail] = useState(initialData?.email ?? "");
   const [attending, setAttending] = useState(initialData?.attending ?? true);
-  const [guestCount, setGuestCount] = useState(initialData?.guest_count ?? 1);
+  const [adultCount, setAdultCount] = useState(initialData?.adult_count ?? 1);
+  const [childCount, setChildCount] = useState(initialData?.child_count ?? 0);
   const [dietaryRestrictions, setDietaryRestrictions] = useState(initialData?.dietary_restrictions ?? "");
   const [potluckDish, setPotluckDish] = useState(initialData?.potluck_dish ?? "");
   const [message, setMessage] = useState(initialData?.message ?? "");
@@ -206,7 +209,8 @@ function RsvpForm({ initialData, isEditing, onSuccess, onCancel }: { initialData
       const payload = {
         ...(isEditing && initialData ? { id: initialData.id } : {}),
         name: name.trim(), email: email.trim(), attending,
-        guest_count: attending ? guestCount : 0,
+        adult_count: attending ? adultCount : 0,
+        child_count: attending ? childCount : 0,
         dietary_restrictions: dietaryRestrictions.trim(),
         potluck_dish: potluckDish.trim(),
         message: message.trim(),
@@ -259,12 +263,20 @@ function RsvpForm({ initialData, isEditing, onSuccess, onCancel }: { initialData
         {attending && (
           <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.4, ease: "easeInOut" }} className="space-y-6 overflow-hidden">
             <div>
-              <label className="mb-2 block text-sm font-medium text-deep-plum dark:text-cream">Number of Guests</label>
-              <div className="flex items-center gap-4">
-                <button type="button" onClick={() => setGuestCount(Math.max(1, guestCount - 1))} className="flex h-11 w-11 items-center justify-center rounded-full border border-sage/30 bg-warm-white text-lg text-deep-plum transition-all hover:border-sage hover:bg-sage/10 dark:border-sage/40 dark:bg-[#162618] dark:text-cream dark:hover:bg-sage/20">-</button>
-                <span className="min-w-[2rem] text-center font-[family-name:var(--font-cormorant-garant)] text-3xl font-semibold text-deep-plum dark:text-cream">{guestCount}</span>
-                <button type="button" onClick={() => setGuestCount(Math.min(10, guestCount + 1))} className="flex h-11 w-11 items-center justify-center rounded-full border border-sage/30 bg-warm-white text-lg text-deep-plum transition-all hover:border-sage hover:bg-sage/10 dark:border-sage/40 dark:bg-[#162618] dark:text-cream dark:hover:bg-sage/20">+</button>
-                <span className="text-sm text-deep-plum/60 dark:text-cream/60">{guestCount === 1 ? "guest" : "guests"}</span>
+              <label className="mb-3 block text-sm font-medium text-deep-plum dark:text-cream">Number of Guests</label>
+              <div className="space-y-3">
+                <div className="flex items-center gap-4">
+                  <button type="button" onClick={() => setAdultCount(Math.max(1, adultCount - 1))} className="flex h-10 w-10 items-center justify-center rounded-full border border-sage/30 bg-warm-white text-lg text-deep-plum transition-all hover:border-sage hover:bg-sage/10 dark:border-sage/40 dark:bg-[#162618] dark:text-cream dark:hover:bg-sage/20">-</button>
+                  <span className="min-w-[2rem] text-center font-[family-name:var(--font-cormorant-garant)] text-2xl font-semibold text-deep-plum dark:text-cream">{adultCount}</span>
+                  <button type="button" onClick={() => setAdultCount(Math.min(10, adultCount + 1))} className="flex h-10 w-10 items-center justify-center rounded-full border border-sage/30 bg-warm-white text-lg text-deep-plum transition-all hover:border-sage hover:bg-sage/10 dark:border-sage/40 dark:bg-[#162618] dark:text-cream dark:hover:bg-sage/20">+</button>
+                  <span className="text-sm text-deep-plum/60 dark:text-cream/60">{adultCount === 1 ? "adult" : "adults"}</span>
+                </div>
+                <div className="flex items-center gap-4">
+                  <button type="button" onClick={() => setChildCount(Math.max(0, childCount - 1))} className="flex h-10 w-10 items-center justify-center rounded-full border border-sage/30 bg-warm-white text-lg text-deep-plum transition-all hover:border-sage hover:bg-sage/10 dark:border-sage/40 dark:bg-[#162618] dark:text-cream dark:hover:bg-sage/20">-</button>
+                  <span className="min-w-[2rem] text-center font-[family-name:var(--font-cormorant-garant)] text-2xl font-semibold text-deep-plum dark:text-cream">{childCount}</span>
+                  <button type="button" onClick={() => setChildCount(Math.min(10, childCount + 1))} className="flex h-10 w-10 items-center justify-center rounded-full border border-sage/30 bg-warm-white text-lg text-deep-plum transition-all hover:border-sage hover:bg-sage/10 dark:border-sage/40 dark:bg-[#162618] dark:text-cream dark:hover:bg-sage/20">+</button>
+                  <span className="text-sm text-deep-plum/60 dark:text-cream/60">{childCount === 1 ? "child" : "children"}</span>
+                </div>
               </div>
             </div>
             <div>
@@ -351,7 +363,7 @@ function RsvpViewer({ data, onEdit }: { data: RsvpData; onEdit: () => void }) {
         {data.attending && (
           <div className="flex justify-between border-b border-sage/10 pb-2 dark:border-sage/20">
             <span className="text-deep-plum/60 dark:text-cream/60">Guests</span>
-            <span className="font-medium text-deep-plum dark:text-cream">{data.guest_count}</span>
+            <span className="font-medium text-deep-plum dark:text-cream">{data.adult_count} {data.adult_count === 1 ? "adult" : "adults"}{data.child_count > 0 ? `, ${data.child_count} ${data.child_count === 1 ? "child" : "children"}` : ""}</span>
           </div>
         )}
         {data.dietary_restrictions && (

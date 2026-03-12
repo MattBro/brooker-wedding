@@ -18,7 +18,8 @@ export async function POST(request: NextRequest) {
       name,
       email,
       attending = true,
-      guest_count = 1,
+      adult_count = 1,
+      child_count = 0,
       dietary_restrictions = "",
       potluck_dish = "",
       message = "",
@@ -40,25 +41,23 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const guestCount = Number(guest_count);
-    if (attending && (isNaN(guestCount) || guestCount < 1)) {
-      return NextResponse.json(
-        { error: "Guest count must be at least 1" },
-        { status: 400 }
-      );
-    }
+    const adults = attending ? Math.max(1, Number(adult_count) || 1) : 0;
+    const children = attending ? Math.max(0, Number(child_count) || 0) : 0;
+    const guestCount = adults + children;
 
     const normalizedPhone = normalizePhone(phone);
 
     const result = await query(
-      `INSERT INTO rsvps (name, email, attending, guest_count, dietary_restrictions, potluck_dish, message, public_display, phone)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-       RETURNING id, name, email, attending, guest_count, dietary_restrictions, potluck_dish, message, public_display, phone, created_at`,
+      `INSERT INTO rsvps (name, email, attending, guest_count, adult_count, child_count, dietary_restrictions, potluck_dish, message, public_display, phone)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+       RETURNING id, name, email, attending, guest_count, adult_count, child_count, dietary_restrictions, potluck_dish, message, public_display, phone, created_at`,
       [
         name.trim(),
         email.trim().toLowerCase(),
         attending,
-        attending ? guestCount : 0,
+        guestCount,
+        adults,
+        children,
         dietary_restrictions.trim(),
         potluck_dish.trim(),
         message.trim(),
@@ -75,7 +74,9 @@ export async function POST(request: NextRequest) {
           name: name.trim(),
           email: email.trim().toLowerCase(),
           attending,
-          guest_count: attending ? guestCount : 0,
+          guest_count: guestCount,
+          adult_count: adults,
+          child_count: children,
           dietary_restrictions: dietary_restrictions.trim(),
           potluck_dish: potluck_dish.trim(),
           message: message.trim(),
@@ -108,7 +109,7 @@ export async function GET(request: NextRequest) {
     // Single RSVP lookup by id — no auth required
     if (id) {
       const result = await query(
-        "SELECT id, name, email, attending, guest_count, dietary_restrictions, potluck_dish, message, public_display, phone, created_at, updated_at FROM rsvps WHERE id = $1",
+        "SELECT id, name, email, attending, guest_count, adult_count, child_count, dietary_restrictions, potluck_dish, message, public_display, phone, created_at, updated_at FROM rsvps WHERE id = $1",
         [Number(id)]
       );
 
@@ -152,7 +153,8 @@ export async function PUT(request: NextRequest) {
       name,
       email,
       attending = true,
-      guest_count = 1,
+      adult_count = 1,
+      child_count = 0,
       dietary_restrictions = "",
       potluck_dish = "",
       message = "",
@@ -181,28 +183,27 @@ export async function PUT(request: NextRequest) {
       );
     }
 
-    const guestCount = Number(guest_count);
-    if (attending && (isNaN(guestCount) || guestCount < 1)) {
-      return NextResponse.json(
-        { error: "Guest count must be at least 1" },
-        { status: 400 }
-      );
-    }
+    const adults = attending ? Math.max(1, Number(adult_count) || 1) : 0;
+    const children = attending ? Math.max(0, Number(child_count) || 0) : 0;
+    const guestCount = adults + children;
 
     const normalizedPhone = normalizePhone(phone);
 
     const result = await query(
       `UPDATE rsvps
        SET name = $1, email = $2, attending = $3, guest_count = $4,
-           dietary_restrictions = $5, potluck_dish = $6, message = $7,
-           public_display = $8, phone = $9, updated_at = NOW()
-       WHERE id = $10
-       RETURNING id, name, email, attending, guest_count, dietary_restrictions, potluck_dish, message, public_display, phone, created_at, updated_at`,
+           adult_count = $5, child_count = $6,
+           dietary_restrictions = $7, potluck_dish = $8, message = $9,
+           public_display = $10, phone = $11, updated_at = NOW()
+       WHERE id = $12
+       RETURNING id, name, email, attending, guest_count, adult_count, child_count, dietary_restrictions, potluck_dish, message, public_display, phone, created_at, updated_at`,
       [
         name.trim(),
         email.trim().toLowerCase(),
         attending,
-        attending ? guestCount : 0,
+        guestCount,
+        adults,
+        children,
         dietary_restrictions.trim(),
         potluck_dish.trim(),
         message.trim(),

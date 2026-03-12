@@ -189,7 +189,7 @@ export default function DetailsPage() {
               Saturday, June 27, 2026
             </p>
             <p>
-              The celebration kicks off in the afternoon. Arrive early to explore our farm and settle in!
+              The celebration kicks off in the afternoon.
             </p>
           </SectionCard>
 
@@ -304,7 +304,7 @@ export default function DetailsPage() {
             </div>
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
               {[
-                { name: "Guardian Dogs", desc: "Our sweet protectors", emoji: "🐕" },
+                { name: "Livestock Guardian Dogs", desc: "Our sweet protectors", emoji: "🐕" },
                 { name: "Barn Cats", desc: "The quiet hunters", emoji: "🐈" },
                 { name: "House Dog", desc: "The couch cuddler", emoji: "🐶" },
                 { name: "House Cats", desc: "The indoor royalty", emoji: "🐱" },

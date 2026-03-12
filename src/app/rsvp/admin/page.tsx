@@ -8,6 +8,8 @@ interface Rsvp {
   email: string;
   attending: boolean;
   guest_count: number;
+  adult_count: number;
+  child_count: number;
   dietary_restrictions: string;
   potluck_dish: string;
   message: string;
@@ -123,7 +125,8 @@ export default function AdminPage() {
                     <th className="px-3 py-3">Email</th>
                     <th className="px-3 py-3">Phone</th>
                     <th className="px-3 py-3">Attending</th>
-                    <th className="px-3 py-3">Guests</th>
+                    <th className="px-3 py-3">Adults</th>
+                    <th className="px-3 py-3">Kids</th>
                     <th className="px-3 py-3">Dietary</th>
                     <th className="px-3 py-3">Potluck</th>
                     <th className="px-3 py-3">Public</th>
@@ -171,10 +174,20 @@ export default function AdminPage() {
                         <td className="px-2 py-2">
                           <input
                             type="number"
+                            min={1}
+                            max={10}
+                            value={editForm.adult_count}
+                            onChange={(e) => set("adult_count", Number(e.target.value))}
+                            className="enchanted-input !w-16 !py-1.5 text-sm"
+                          />
+                        </td>
+                        <td className="px-2 py-2">
+                          <input
+                            type="number"
                             min={0}
                             max={10}
-                            value={editForm.guest_count}
-                            onChange={(e) => set("guest_count", Number(e.target.value))}
+                            value={editForm.child_count}
+                            onChange={(e) => set("child_count", Number(e.target.value))}
                             className="enchanted-input !w-16 !py-1.5 text-sm"
                           />
                         </td>
@@ -234,7 +247,8 @@ export default function AdminPage() {
                             {r.attending ? "Yes" : "No"}
                           </span>
                         </td>
-                        <td className="px-3 py-3 text-deep-plum/70 dark:text-cream/70">{r.guest_count}</td>
+                        <td className="px-3 py-3 text-deep-plum/70 dark:text-cream/70">{r.adult_count}</td>
+                        <td className="px-3 py-3 text-deep-plum/70 dark:text-cream/70">{r.child_count}</td>
                         <td className="px-3 py-3 text-deep-plum/70 dark:text-cream/70">{r.dietary_restrictions || "—"}</td>
                         <td className="px-3 py-3 text-deep-plum/70 dark:text-cream/70">{r.potluck_dish || "—"}</td>
                         <td className="px-3 py-3 text-deep-plum/70 dark:text-cream/70">{r.public_display ? "Yes" : "No"}</td>
