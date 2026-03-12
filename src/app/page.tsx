@@ -6,6 +6,14 @@ import Countdown from "@/components/Countdown";
 import GameCard from "@/components/GameCard";
 import PixelButton from "@/components/PixelButton";
 
+function getAge(birthYear: number, birthMonth: number, birthDay: number) {
+  const today = new Date();
+  let age = today.getFullYear() - birthYear;
+  const monthDiff = today.getMonth() + 1 - birthMonth;
+  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDay)) age--;
+  return age;
+}
+
 const games = [
   {
     title: "Egg Catcher",
@@ -313,14 +321,14 @@ export default function Home() {
                   <span className="font-[family-name:var(--font-cormorant-garant)] text-base font-semibold text-forest dark:text-cream">
                     Emmett
                   </span>
-                  <span className="text-xs text-forest/50 dark:text-cream/50">Age 11</span>
+                  <span className="text-xs text-forest/50 dark:text-cream/50">Age {getAge(2014, 3, 29)}</span>
                 </div>
                 <div className="flex flex-col items-center gap-1.5">
                   <span className="text-2xl sm:text-3xl">&#128142;</span>
                   <span className="font-[family-name:var(--font-cormorant-garant)] text-base font-semibold text-forest dark:text-cream">
                     Sapphire
                   </span>
-                  <span className="text-xs text-forest/50 dark:text-cream/50">Age 8</span>
+                  <span className="text-xs text-forest/50 dark:text-cream/50">Age {getAge(2017, 6, 19)}</span>
                 </div>
               </div>
             </div>
