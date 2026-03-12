@@ -250,44 +250,6 @@ export default function DetailsPage() {
 
           <BotanicalDivider />
 
-          <SectionCard
-            icon={
-              <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
-                <path d="M9 11l3 3L22 4" />
-                <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" />
-              </svg>
-            }
-            title="What to Bring"
-            delay={0.25}
-            accent="sage"
-          >
-            <div className="space-y-1">
-              <ul className="mt-1 space-y-3">
-                {[
-                  { item: "Lawn chairs or blankets", note: "Outdoor seating is bring-your-own" },
-                  { item: "Sunscreen & bug spray", note: "We are on a farm after all" },
-                  { item: "A big appetite", note: "There will be plenty of food" },
-                  { item: "Dancing shoes", note: "There will be dancing" },
-                  { item: "Good vibes & warm hearts", note: "The most important thing" },
-                ].map((entry) => (
-                  <li key={entry.item} className="flex items-start gap-3">
-                    <svg className="mt-0.5 h-5 w-5 shrink-0 text-[#9CAF88]" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                    <div>
-                      <span className="font-medium text-[#2D5016] dark:text-[#FDF8F0]">{entry.item}</span>
-                      <span className="ml-2 text-sm text-[#2D5016]/55 dark:text-[#FDF8F0]/55">
-                        {entry.note}
-                      </span>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </SectionCard>
-
-          <BotanicalDivider />
-
           {/* Farm Animals Section */}
           <motion.div
             {...fadeUp}
