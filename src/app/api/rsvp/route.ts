@@ -107,17 +107,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ data: result[0] });
     }
 
-    // Full list requires admin auth
-    const authHeader = request.headers.get("authorization");
-    const adminToken = process.env.ADMIN_TOKEN;
-
-    if (!adminToken || authHeader !== `Bearer ${adminToken}`) {
-      return NextResponse.json(
-        { error: "Unauthorized" },
-        { status: 401 }
-      );
-    }
-
+    // Full list — unlisted admin page only
     const result = await query(
       "SELECT * FROM rsvps ORDER BY created_at DESC"
     );
